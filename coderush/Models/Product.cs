@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace StoreManager.Models
 {
-    public class Product
+    public class Product : BaseEntity
     {
-        public int ProductId { get; set; }
+        public int ProductId { get { return Id; } set { Id = value; } }
         [Required]
         public string ProductName { get; set; }
         public string ProductCode { get; set; }

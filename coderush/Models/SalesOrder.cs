@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace StoreManager.Models
 {
-    public class SalesOrder
+    public class SalesOrder : BaseEntity
     {
-        public int SalesOrderId { get; set; }
+        public int SalesOrderId { get { return Id; } set { Id = value; } }
         [Display(Name = "Order Number")]
         public string SalesOrderName { get; set; }
         [Display(Name = "Branch")]
