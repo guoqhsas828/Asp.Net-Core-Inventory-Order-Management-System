@@ -1,5 +1,5 @@
-﻿using coderush.Data;
-using coderush.Models;
+﻿using StoreManager.Data;
+using StoreManager.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -14,7 +14,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
 
-namespace coderush.Services
+namespace StoreManager.Services
 {
     public class Functional : IFunctional
     {
@@ -244,6 +244,7 @@ namespace coderush.Services
           var profile = _context.UserProfile.SingleOrDefault(x => x.ApplicationUserId.Equals(existingUser.Id));
           if (profile == null)
           {
+            await _roles.GenerateRolesFromPagesAsync();
             //add to user profile
             profile = new UserProfile();
             profile.FirstName = firstName;
@@ -252,6 +253,7 @@ namespace coderush.Services
             profile.ApplicationUserId = existingUser.Id;
             await _context.UserProfile.AddAsync(profile);
             await _context.SaveChangesAsync();
+            await _roles.AddToRoles(existingUser.Id);
           }
 
           return await _userManager.AddPasswordAsync(existingUser, passwd);

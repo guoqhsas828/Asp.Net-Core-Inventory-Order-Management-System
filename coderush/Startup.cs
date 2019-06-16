@@ -8,12 +8,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using coderush.Data;
-using coderush.Models;
-using coderush.Services;
+using StoreManager.Data;
+using StoreManager.Models;
+using StoreManager.Services;
 using Newtonsoft.Json.Serialization;
 
-namespace coderush
+namespace StoreManager
 {
   public class Startup
   {
@@ -121,13 +121,27 @@ namespace coderush
 
       app.UseAuthentication();
 
+      //app.UseMvc(routes =>
+      //{
+      //  routes.MapRoute(
+      //            name: "default",
+      //            template: "{controller=UserRole}/{action=UserProfile}/{id?}");
+      //});
+
       app.UseMvc(routes =>
       {
+        routes.MapRoute(
+        name: "identity",
+        template: "Identity/{controller=Account}/{action=Register}/{id?}");
+
+        //routes.MapRoute(
+        //    name: "default",
+        //    template: "{controller:slugify=Home}/{action:slugify=Index}/{id?}");
+
         routes.MapRoute(
                   name: "default",
                   template: "{controller=UserRole}/{action=UserProfile}/{id?}");
       });
-
     }
   }
 }

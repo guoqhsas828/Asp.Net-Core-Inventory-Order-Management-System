@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace coderush.Controllers
+namespace StoreManager.Controllers
 {
     [Authorize(Roles = Pages.MainMenu.PurchaseType.RoleName)]
     public class PurchaseTypeController : Controller

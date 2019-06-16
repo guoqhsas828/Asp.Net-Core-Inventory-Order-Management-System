@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using coderush.Models;
+using StoreManager.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace coderush.Controllers
+namespace StoreManager.Controllers
 {
     
     public class UserRoleController : Controller

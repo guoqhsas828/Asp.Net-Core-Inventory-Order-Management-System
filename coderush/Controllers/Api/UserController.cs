@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using coderush.Data;
-using coderush.Models;
-using coderush.Models.AccountViewModels;
-using coderush.Models.SyncfusionViewModels;
+using StoreManager.Data;
+using StoreManager.Models;
+using StoreManager.Models.AccountViewModels;
+using StoreManager.Models.SyncfusionViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
-namespace coderush.Controllers.Api
+namespace StoreManager.Controllers.Api
 {
     [Authorize]
     [Produces("application/json")]

@@ -10,11 +10,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using coderush.Models;
-using coderush.Models.ManageViewModels;
-using coderush.Services;
+using StoreManager.Models;
+using StoreManager.Models.ManageViewModels;
+using StoreManager.Services;
 
-namespace coderush.Controllers
+namespace StoreManager.Controllers
 {
     [Authorize]
     [Route("[controller]/[action]")]

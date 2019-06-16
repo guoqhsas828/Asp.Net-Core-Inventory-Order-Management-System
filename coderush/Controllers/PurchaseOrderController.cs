@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using coderush.Data;
-using coderush.Models;
+using StoreManager.Data;
+using StoreManager.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace coderush.Controllers
+namespace StoreManager.Controllers
 {
     [Authorize(Roles = Pages.MainMenu.PurchaseOrder.RoleName)]
     public class PurchaseOrderController : Controller

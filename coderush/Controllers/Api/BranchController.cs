@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using coderush.Data;
-using coderush.Models;
-using coderush.Models.SyncfusionViewModels;
-using coderush.Services;
+using StoreManager.Data;
+using StoreManager.Models;
+using StoreManager.Models.SyncfusionViewModels;
+using StoreManager.Services;
 using Microsoft.AspNetCore.Authorization;
 
-namespace coderush.Controllers.Api
+namespace StoreManager.Controllers.Api
 {
     [Authorize]
     [Produces("application/json")]

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace coderush.Controllers
+namespace StoreManager.Controllers
 {
     public class NumberSequenceController : Controller
     {

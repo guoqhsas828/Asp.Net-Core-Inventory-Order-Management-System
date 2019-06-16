@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 
-namespace coderush.Models.ManageViewModels
+namespace StoreManager.Models.ManageViewModels
 {
     public class ExternalLoginsViewModel
     {

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
-using coderush.Services;
+using StoreManager.Services;
 
-namespace coderush.Services
+namespace StoreManager.Services
 {
     public static class EmailSenderExtensions
     {

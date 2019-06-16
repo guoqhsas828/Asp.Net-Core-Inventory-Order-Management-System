@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 
-namespace coderush.Services
+namespace StoreManager.Services
 {
   public interface IFunctional
   {
