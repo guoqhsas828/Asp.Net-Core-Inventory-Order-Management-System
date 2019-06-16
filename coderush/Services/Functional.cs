@@ -229,42 +229,67 @@ namespace coderush.Services
 
         }
 
-        public async Task CreateDefaultSuperAdmin()
+    public async Task CreateDefaultSuperAdmin()
+    {
+      await CreateUser(_superAdminDefaultOptions.Email, _superAdminDefaultOptions.Password, "Super", "Admin");
+    }
+
+    public async Task<IdentityResult> CreateUser(string email, string passwd, string firstName, string lastName)
+    {
+      try
+      {
+        var existingUser = await _userManager.FindByEmailAsync(email);
+        if (existingUser != null)
         {
-            try
-            {
-                await _roles.GenerateRolesFromPagesAsync();
+          var profile = _context.UserProfile.SingleOrDefault(x => x.ApplicationUserId.Equals(existingUser.Id));
+          if (profile == null)
+          {
+            //add to user profile
+            profile = new UserProfile();
+            profile.FirstName = firstName;
+            profile.LastName = lastName;
+            profile.Email = email;
+            profile.ApplicationUserId = existingUser.Id;
+            await _context.UserProfile.AddAsync(profile);
+            await _context.SaveChangesAsync();
+          }
 
-                ApplicationUser superAdmin = new ApplicationUser();
-                superAdmin.Email = _superAdminDefaultOptions.Email;
-                superAdmin.UserName = superAdmin.Email;
-                superAdmin.EmailConfirmed = true;
-
-                var result = await _userManager.CreateAsync(superAdmin, _superAdminDefaultOptions.Password);
-
-                if (result.Succeeded)
-                {
-                    //add to user profile
-                    UserProfile profile = new UserProfile();
-                    profile.FirstName = "Super";
-                    profile.LastName = "Admin";
-                    profile.Email = superAdmin.Email;
-                    profile.ApplicationUserId = superAdmin.Id;
-                    await _context.UserProfile.AddAsync(profile);
-                    await _context.SaveChangesAsync();
-
-                    await _roles.AddToRoles(superAdmin.Id);
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
+          return await _userManager.AddPasswordAsync(existingUser, passwd);
         }
 
+        await _roles.GenerateRolesFromPagesAsync();
 
-        public async Task<string> UploadFile(List<IFormFile> files, IHostingEnvironment env, string uploadFolder)
+        ApplicationUser newUser = new ApplicationUser();
+        newUser.Email = email;
+        newUser.UserName = email;
+        newUser.EmailConfirmed = true;
+
+        var result = await _userManager.CreateAsync(newUser, passwd);
+
+        if (result.Succeeded)
+        {
+          //add to user profile
+          UserProfile profile = new UserProfile();
+          profile.FirstName = firstName;
+          profile.LastName = lastName;
+          profile.Email = email;
+          profile.ApplicationUserId = newUser.Id;
+          await _context.UserProfile.AddAsync(profile);
+          await _context.SaveChangesAsync();
+
+          await _roles.AddToRoles(newUser.Id);
+        }
+
+        return result;
+      }
+      catch (Exception)
+      {
+
+        throw;
+      }
+    }
+
+    public async Task<string> UploadFile(List<IFormFile> files, IHostingEnvironment env, string uploadFolder)
         {
             var result = "";
 

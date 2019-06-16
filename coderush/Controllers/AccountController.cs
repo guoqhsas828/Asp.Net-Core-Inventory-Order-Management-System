@@ -24,17 +24,20 @@ namespace coderush.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
+    private readonly IFunctional _functional_;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
-            ILogger<AccountController> logger)
+            ILogger<AccountController> logger, 
+            IFunctional functional)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
+      _functional_ = functional;
         }
 
         [TempData]
@@ -212,34 +215,34 @@ namespace coderush.Controllers
             return View();
         }
 
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
+    [HttpPost]
+    [AllowAnonymous]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
+    {
+      ViewData["ReturnUrl"] = returnUrl;
+      if (ModelState.IsValid)
+      {
+        //   var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+        var result = await _functional_.CreateUser(model.Email, model.Password, model.Email, model.Email);
+        if (result.Succeeded)
         {
-            ViewData["ReturnUrl"] = returnUrl;
-            if (ModelState.IsValid)
-            {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await _userManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    _logger.LogInformation("User created a new account with password.");
+          _logger.LogInformation("User created a new account with password.");
+          var user = await _userManager.FindByEmailAsync(model.Email);
+          var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+          var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
+          await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
 
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
-                    await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
-
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    _logger.LogInformation("User created a new account with password.");
-                    return RedirectToLocal(returnUrl);
-                }
-                AddErrors(result);
-            }
-
-            // If we got this far, something failed, redisplay form
-            return View(model);
+          await _signInManager.SignInAsync(user, isPersistent: false);
+          _logger.LogInformation("User created a new account with password.");
+          return RedirectToLocal(returnUrl);
         }
+        AddErrors(result);
+      }
+
+      // If we got this far, something failed, redisplay form
+      return View(model);
+    }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
