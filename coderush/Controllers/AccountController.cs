@@ -14,6 +14,7 @@ using StoreManager.Models;
 using StoreManager.Models.AccountViewModels;
 using StoreManager.Services;
 using StoreManager.Data;
+using StoreManager.Interfaces;
 
 namespace StoreManager.Controllers
 {
@@ -26,19 +27,22 @@ namespace StoreManager.Controllers
     private readonly IEmailSender _emailSender;
     private readonly ILogger _logger;
     private readonly ApplicationDbContext _context;
+    private readonly IBasketService _basketService;
 
     public AccountController(
         UserManager<ApplicationUser> userManager,
         SignInManager<ApplicationUser> signInManager,
         IEmailSender emailSender,
         ILogger<AccountController> logger,
-        ApplicationDbContext ctx)
+        ApplicationDbContext ctx, 
+        IBasketService basketService)
     {
       _userManager = userManager;
       _signInManager = signInManager;
       _emailSender = emailSender;
       _logger = logger;
       _context = ctx;
+      _basketService = basketService;
     }
 
     [TempData]
@@ -77,8 +81,8 @@ namespace StoreManager.Controllers
           string anonymousBasketId = Request.Cookies[Constants.BASKET_COOKIENAME];
           if (!String.IsNullOrEmpty(anonymousBasketId))
           {
-            //await _basketService.TransferBasketAsync(anonymousBasketId, model.Email);
-            //Response.Cookies.Delete(Constants.BASKET_COOKIENAME);
+            await _basketService.TransferBasketAsync(anonymousBasketId, model.Email);
+            Response.Cookies.Delete(Constants.BASKET_COOKIENAME);
           }
           return RedirectToLocal(returnUrl);
         }

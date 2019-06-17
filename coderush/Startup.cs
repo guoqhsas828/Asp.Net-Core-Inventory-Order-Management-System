@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StoreManager.Data;
 using StoreManager.Models;
+using StoreManager.Interfaces;
 using StoreManager.Services;
 using Newtonsoft.Json.Serialization;
 
@@ -82,7 +83,19 @@ namespace StoreManager
       // Get Super Admin Default options
       services.Configure<SuperAdminDefaultOptions>(Configuration.GetSection("SuperAdminDefaultOptions"));
 
+      services.AddScoped(typeof(IAsyncRepository<>), typeof(EfRepository<>));
+
+      //services.AddScoped<ICatalogViewModelService, CachedCatalogViewModelService>();
+      services.AddScoped<IBasketService, BasketService>();
+      //services.AddScoped<IBasketViewModelService, BasketViewModelService>();
+      services.AddScoped<IOrderService, OrderService>();
+      services.AddScoped<IOrderRepository, OrderRepository>();
+      //services.AddScoped<CatalogViewModelService>();
+      services.Configure<CatalogSettings>(Configuration);
+      services.AddSingleton<IUriComposer>(new UriComposer(Configuration.Get<CatalogSettings>()));
+
       // Add email services.
+      services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
       services.AddTransient<IEmailSender, EmailSender>();
 
       services.AddTransient<INumberSequence, Services.NumberSequence>();
@@ -130,17 +143,20 @@ namespace StoreManager
 
       app.UseMvc(routes =>
       {
-        routes.MapRoute(
-        name: "identity",
-        template: "Identity/{controller=Account}/{action=Register}/{id?}");
+        //routes.MapRoute(
+        //name: "identity",
+        //template: "Identity/{controller=Account}/{action=Register}/{id?}");
 
+        routes.MapRoute(
+        name: "default",
+        template: "{controller=Account}/{action=Login}/{id?}");
         //routes.MapRoute(
         //    name: "default",
         //    template: "{controller:slugify=Home}/{action:slugify=Index}/{id?}");
 
-        routes.MapRoute(
-                  name: "default",
-                  template: "{controller=UserRole}/{action=UserProfile}/{id?}");
+        //routes.MapRoute(
+        //          name: "default",
+        //          template: "{controller=UserRole}/{action=UserProfile}/{id?}");
       });
     }
   }
