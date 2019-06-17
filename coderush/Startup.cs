@@ -150,9 +150,9 @@ namespace StoreManager
         routes.MapRoute(
         name: "default",
         template: "{controller=Account}/{action=Login}/{id?}");
-        //routes.MapRoute(
-        //    name: "default",
-        //    template: "{controller:slugify=Home}/{action:slugify=Index}/{id?}");
+        routes.MapRoute(
+            name: "default",
+            template: "{controller:slugify=Home}/{action:slugify=Index}/{id?}");
 
         //routes.MapRoute(
         //          name: "default",
