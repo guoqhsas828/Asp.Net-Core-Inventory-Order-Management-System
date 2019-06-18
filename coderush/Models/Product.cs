@@ -6,22 +6,28 @@ using System.Threading.Tasks;
 
 namespace StoreManager.Models
 {
-    public class Product : BaseEntity
+  public class Product : BaseEntity
+  {
+    public int ProductId
     {
-        public int ProductId { get { return Id; } set { Id = value; } }
-        [Required]
-        public string ProductName { get; set; }
-        public string ProductCode { get; set; }
-        public string Barcode { get; set; }
-        public string Description { get; set; }
-        public string ProductImageUrl { get; set; }
-        [Display(Name = "UOM")]
-        public int UnitOfMeasureId { get; set; }
-        public double DefaultBuyingPrice { get; set; } = 0.0;
-        public double DefaultSellingPrice { get; set; } = 0.0;
-        [Display(Name = "Branch")]
-        public int BranchId { get; set; }
-        [Display(Name = "Currency")]
-        public int CurrencyId { get; set; }
+      get { return Id; }
+      set { Id = value; }
     }
+
+    [Required] public string ProductName { get; set; }
+    public string ProductCode { get; set; }
+    public string Barcode { get; set; }
+    public string Description { get; set; }
+    public string ProductImageUrl { get; set; }
+    [Display(Name = "UOM")] public int UnitOfMeasureId { get; set; }
+    public double DefaultBuyingPrice { get; set; } = 0.0;
+    public double DefaultSellingPrice { get; set; } = 0.0;
+    [Display(Name = "Branch")] public int BranchId { get; set; }
+    [Display(Name = "Currency")] public int CurrencyId { get; set; }
+
+    public int CatalogTypeId { get; set; }
+    public ProductType CatalogType { get; set; }
+    public int CatalogBrandId { get; set; }
+    public CatalogBrand CatalogBrand { get; set; }
+  }
 }

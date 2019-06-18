@@ -8,7 +8,7 @@ namespace StoreManager.Specifications
             : base(o => o.CustomerId.ToString() == buyerId)
         {
             AddInclude(o => o.SalesOrderLines);
-            //AddInclude($"{nameof(SalesOrder.SalesOrderLines)}.{nameof(SalesOrderLine.ItemOrdered)}");
+            AddInclude($"{nameof(SalesOrder.SalesOrderLines)}.{nameof(SalesOrderLine.Product)}");
         }
     }
 }

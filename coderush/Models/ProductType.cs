@@ -6,11 +6,15 @@ using System.Threading.Tasks;
 
 namespace StoreManager.Models
 {
-    public class ProductType
+  public class ProductType : BaseEntity
+  {
+    public int ProductTypeId
     {
-        public int ProductTypeId { get; set; }
-        [Required]
-        public string ProductTypeName { get; set; }
-        public string Description { get; set; }
+      get { return Id; }
+      set { Id = value; }
     }
+
+    [Required] public string ProductTypeName { get; set; }
+    public string Description { get; set; }
+  }
 }

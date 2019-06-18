@@ -6,6 +6,11 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using Microsoft.eShopWeb.Web;
+using Microsoft.eShopWeb.Web.Interfaces;
+using Microsoft.eShopWeb.Web.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StoreManager.Data;
@@ -13,6 +18,8 @@ using StoreManager.Models;
 using StoreManager.Interfaces;
 using StoreManager.Services;
 using Newtonsoft.Json.Serialization;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace StoreManager
 {
@@ -28,8 +35,12 @@ namespace StoreManager
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
+      var connStr = Configuration.GetConnectionString(
+        Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production"
+          ? "CatalogProdConn" : "DefaultConnection");
+
       services.AddDbContext<ApplicationDbContext>(options =>
-          options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+          options.UseSqlServer(connStr));
 
       // Get Identity Default Options
       IConfigurationSection identityDefaultOptionsConfigurationSection = Configuration.GetSection("IdentityDefaultOptions");
@@ -85,12 +96,12 @@ namespace StoreManager
 
       services.AddScoped(typeof(IAsyncRepository<>), typeof(EfRepository<>));
 
-      //services.AddScoped<ICatalogViewModelService, CachedCatalogViewModelService>();
+      services.AddScoped<ICatalogViewModelService, CachedCatalogViewModelService>();
       services.AddScoped<IBasketService, BasketService>();
-      //services.AddScoped<IBasketViewModelService, BasketViewModelService>();
+      services.AddScoped<IBasketViewModelService, BasketViewModelService>();
       services.AddScoped<IOrderService, OrderService>();
       services.AddScoped<IOrderRepository, OrderRepository>();
-      //services.AddScoped<CatalogViewModelService>();
+      services.AddScoped<CatalogViewModelService>();
       services.Configure<CatalogSettings>(Configuration);
       services.AddSingleton<IUriComposer>(new UriComposer(Configuration.Get<CatalogSettings>()));
 
@@ -113,6 +124,42 @@ namespace StoreManager
 
       });
 
+      // Add memory cache services
+      services.AddMemoryCache();
+
+      services.AddRouting(options =>
+      {
+        // Replace the type and the name used to refer to it with your own
+        // IOutboundParameterTransformer implementation
+        options.ConstraintMap["slugify"] = typeof(SlugifyParameterTransformer);
+      });
+
+      services.AddMvc(options =>
+          {
+            options.Conventions.Add(new RouteTokenTransformerConvention(
+              new SlugifyParameterTransformer()));
+          }
+        )
+        .AddRazorPagesOptions(options =>
+        {
+          options.Conventions.AuthorizePage("/Basket/Checkout");
+          options.AllowAreas = true;
+        })
+        .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+      services.AddHttpContextAccessor();
+      services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" }); });
+
+      //services.AddHealthChecks()
+      //  .AddCheck<HomePageHealthCheck>("home_page_health_check")
+      //  .AddCheck<ApiHealthCheck>("api_health_check");
+
+      //services.Configure<ServiceConfig>(config =>
+      //{
+      //  config.Services = new List<ServiceDescriptor>(services);
+
+      //  config.Path = "/allservices";
+      //});
 
     }
 
@@ -133,6 +180,12 @@ namespace StoreManager
       app.UseStaticFiles();
 
       app.UseAuthentication();
+      // Enable middleware to serve generated Swagger as a JSON endpoint.
+      app.UseSwagger();
+
+      // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
+      // specifying the Swagger JSON endpoint.
+      app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"); });
 
       //app.UseMvc(routes =>
       //{
@@ -147,9 +200,9 @@ namespace StoreManager
         //name: "identity",
         //template: "Identity/{controller=Account}/{action=Register}/{id?}");
 
-        routes.MapRoute(
-        name: "default",
-        template: "{controller=Account}/{action=Login}/{id?}");
+        //routes.MapRoute(
+        //name: "default",
+        //template: "{controller=Home}/{action=Index}/{id?}");
         routes.MapRoute(
             name: "default",
             template: "{controller:slugify=Home}/{action:slugify=Index}/{id?}");

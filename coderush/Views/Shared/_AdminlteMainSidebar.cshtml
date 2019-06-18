@@ -2,11 +2,11 @@
 @inject StoreManager.Data.ApplicationDbContext Context
 
 @{
-    UserProfile profile = Context.UserProfile.SingleOrDefault(x => x.ApplicationUserId.Equals(Model.Id));
+    UserProfile profile = Model == null ? Context.UserProfile.First() : Context.UserProfile.SingleOrDefault(x => x.ApplicationUserId.Equals(Model.Id));
 }
 <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
-    <section class="sidebar">
+    <section class="sidebar" hidden="hidden">
         <!-- Sidebar user panel -->
         <div class="user-panel">
             <div class="pull-left image">

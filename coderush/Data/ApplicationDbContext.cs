@@ -84,9 +84,7 @@ namespace StoreManager.Data
     public DbSet<StoreManager.Models.UserProfile> UserProfile { get; set; }
 
     public DbSet<Basket> Baskets { get; set; }
-    //public DbSet<CatalogItem> CatalogItems { get; set; }
-    //public DbSet<CatalogBrand> CatalogBrands { get; set; }
-    //public DbSet<CatalogType> CatalogTypes { get; set; }
+    public DbSet<CatalogBrand> CatalogBrands { get; set; }
     public DbSet<BasketItem> BasketItems { get; set; }
   }
 }
