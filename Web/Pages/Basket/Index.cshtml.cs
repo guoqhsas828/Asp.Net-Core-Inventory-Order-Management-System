@@ -40,20 +40,20 @@ namespace Microsoft.eShopWeb.Web.Pages.Basket
       await SetBasketModelAsync();
     }
 
-    //public async Task<IActionResult> OnPost(CatalogItemViewModel productDetails)
-    //{
-    //    if (productDetails?.Id == null)
-    //    {
-    //        return RedirectToPage("/Index");
-    //    }
-    //    await SetBasketModelAsync();
+    public async Task<IActionResult> OnPost(CatalogItemViewModel productDetails)
+    {
+      if (productDetails?.Id == null)
+      {
+        return RedirectToPage("/Index");
+      }
+      await SetBasketModelAsync();
 
-    //    await _basketService.AddItemToBasket(BasketModel.Id, productDetails.Id, productDetails.Price, 1);
+      await _basketService.AddItemToBasket(BasketModel.Id, productDetails.Id, productDetails.Price, 1);
 
-    //    await SetBasketModelAsync();
+      await SetBasketModelAsync();
 
-    //    return RedirectToPage();
-    //}
+      return RedirectToPage();
+    }
 
     public async Task OnPostUpdate(Dictionary<string, int> items)
     {

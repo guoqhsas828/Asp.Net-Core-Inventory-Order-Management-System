@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace OrderManager.Migrations
+namespace Microsoft.eShopWeb.Infrastructure.Migrations
 {
     public partial class InitDb : Migration
     {
