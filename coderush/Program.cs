@@ -9,6 +9,7 @@ using StoreManager.Services;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.eShopWeb.Infrastructure.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -27,12 +28,13 @@ namespace StoreManager
         try
         {
           var context = services.GetRequiredService<ApplicationDbContext>();
-          var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
-          var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+          //var catalogContext = services.GetRequiredService<CatalogContext>();
+          //var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+          //var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
           var functional = services.GetRequiredService<IFunctional>();
           var loggerFactory = services.GetRequiredService<ILoggerFactory>();
           DbInitializer.Initialize(context, functional).Wait();
-          CatalogContextSeed.SeedAsync(context, loggerFactory).Wait();
+          //CatalogContextSeed.SeedAsync(catalogContext, loggerFactory).Wait();
         }
         catch (Exception ex)
         {

@@ -24,7 +24,8 @@ namespace Microsoft.eShopWeb.ApplicationCore.Entities.OrderAggregate
             // required by EF
         }
 
-        public int CatalogItemId { get; private set; }
+      public int CatalogItemOrderedId { get; set; }
+      public int CatalogItemId { get; private set; }
         public string ProductName { get; private set; }
         public string PictureUri { get; private set; }
     }

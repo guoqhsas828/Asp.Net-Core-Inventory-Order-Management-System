@@ -522,7 +522,7 @@ namespace StoreManager.Controllers
         {
             return string.Format(
                 AuthenticatorUriFormat,
-                _urlEncoder.Encode("StoreManager"),
+                _urlEncoder.Encode("LemonadeAnJ"),
                 _urlEncoder.Encode(email),
                 unformattedKey);
         }

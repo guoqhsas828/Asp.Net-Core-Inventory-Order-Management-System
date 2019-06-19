@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.eShopWeb.ApplicationCore.Entities;
+using Microsoft.eShopWeb.ApplicationCore.Entities.OrderAggregate;
+using Microsoft.eShopWeb.Infrastructure.Identity;
 using Microsoft.EntityFrameworkCore;
 using StoreManager.Models;
 
@@ -53,8 +56,6 @@ namespace StoreManager.Data
 
     public DbSet<StoreManager.Models.PaymentVoucher> PaymentVoucher { get; set; }
 
-    public DbSet<StoreManager.Models.Product> Product { get; set; }
-
     public DbSet<StoreManager.Models.ProductType> ProductType { get; set; }
 
     public DbSet<StoreManager.Models.PurchaseOrder> PurchaseOrder { get; set; }
@@ -83,8 +84,16 @@ namespace StoreManager.Data
 
     public DbSet<StoreManager.Models.UserProfile> UserProfile { get; set; }
 
-    public DbSet<Basket> Baskets { get; set; }
     public DbSet<CatalogBrand> CatalogBrands { get; set; }
+    public DbSet<StoreManager.Models.Product> Product { get; set; }
+
+
+    public DbSet<Basket> Baskets { get; set; }
+
     public DbSet<BasketItem> BasketItems { get; set; }
+    public DbSet<CatalogItem> CatalogItems { get; set; }
+    public DbSet<CatalogType> CatalogTypes { get; set; }
+    public DbSet<Order> Orders { get; set; }
+    public DbSet<OrderItem> OrderItems { get; set; }
   }
 }

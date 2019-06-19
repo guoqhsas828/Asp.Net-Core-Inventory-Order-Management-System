@@ -2,8 +2,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using StoreManager;
+using Microsoft.eShopWeb.ApplicationCore.Entities.OrderAggregate;
 using Microsoft.eShopWeb.ApplicationCore.Interfaces;
+using Microsoft.eShopWeb.Infrastructure.Identity;
 using Microsoft.eShopWeb.Web.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -44,7 +45,7 @@ namespace Microsoft.eShopWeb.Web.Pages.Basket
 
             await _basketService.SetQuantities(BasketModel.Id, items);
 
-            await _orderService.CreateOrderAsync(BasketModel.Id, new Address(BasketModel.StreetAddress));
+            await _orderService.CreateOrderAsync(BasketModel.Id, new Address("582 Springfield Ave."));
 
             await _basketService.DeleteBasketAsync(BasketModel.Id);
 

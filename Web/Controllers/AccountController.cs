@@ -2,13 +2,13 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using StoreManager;
+using Microsoft.eShopWeb.ApplicationCore.Interfaces;
+using Microsoft.eShopWeb.Infrastructure.Identity;
 using Microsoft.eShopWeb.Web.ViewModels.Account;
 using System;
 using System.Threading.Tasks;
 using StoreManager.Interfaces;
 using StoreManager.Models;
-using StoreManager.Services;
 
 namespace Microsoft.eShopWeb.Web.Controllers
 {
@@ -21,20 +21,17 @@ namespace Microsoft.eShopWeb.Web.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IBasketService _basketService;
         private readonly IAppLogger<AccountController> _logger;
-      private readonly IFunctional _functional;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IBasketService basketService,
-            IAppLogger<AccountController> logger,
-            IFunctional functional)
+            IAppLogger<AccountController> logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _basketService = basketService;
             _logger = logger;
-          _functional = functional;
         }
 
         // GET: /Account/SignIn 
@@ -172,11 +169,10 @@ namespace Microsoft.eShopWeb.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-              //  var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-              var result = await _functional.CreateUser(model.Email, model.Password, "", model.Email);//  _userManager.CreateAsync(user, model.Password);
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                  var user = await _userManager.FindByEmailAsync(model.Email);
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     return RedirectToLocal(returnUrl);
                 }

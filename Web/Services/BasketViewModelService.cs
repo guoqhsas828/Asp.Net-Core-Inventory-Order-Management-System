@@ -1,4 +1,5 @@
 ﻿using Microsoft.eShopWeb.ApplicationCore.Entities;
+using Microsoft.eShopWeb.ApplicationCore.Interfaces;
 using Microsoft.eShopWeb.Web.Interfaces;
 using Microsoft.eShopWeb.Web.Pages.Basket;
 using System.Collections.Generic;
@@ -14,10 +15,10 @@ namespace Microsoft.eShopWeb.Web.Services
     {
         private readonly IAsyncRepository<Basket> _basketRepository;
         private readonly IUriComposer _uriComposer;
-        private readonly IAsyncRepository<Product> _itemRepository;
+        private readonly IAsyncRepository<CatalogItem> _itemRepository;
 
         public BasketViewModelService(IAsyncRepository<Basket> basketRepository,
-            IAsyncRepository<Product> itemRepository,
+            IAsyncRepository<CatalogItem> itemRepository,
             IUriComposer uriComposer)
         {
             _basketRepository = basketRepository;
@@ -59,7 +60,7 @@ namespace Microsoft.eShopWeb.Web.Services
             };
         }
 
-        private async Task<List<BasketItemViewModel>> GetBasketItems(ICollection<BasketItem> basketItems)
+        private async Task<List<BasketItemViewModel>> GetBasketItems(IReadOnlyCollection<BasketItem> basketItems)
         {
             var items = new List<BasketItemViewModel>();
             foreach (var item in basketItems)
@@ -72,8 +73,8 @@ namespace Microsoft.eShopWeb.Web.Services
                     CatalogItemId = item.CatalogItemId
                 };
                 var catalogItem = await _itemRepository.GetByIdAsync(item.CatalogItemId);
-                itemModel.PictureUrl = _uriComposer.ComposePicUri(catalogItem.ProductImageUrl);
-                itemModel.ProductName = catalogItem.ProductName;
+                itemModel.PictureUrl = _uriComposer.ComposePicUri(catalogItem.PictureUri);
+                itemModel.ProductName = catalogItem.Name;
                 items.Add(itemModel);
             }
 

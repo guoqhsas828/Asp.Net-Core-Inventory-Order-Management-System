@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.eShopWeb.Infrastructure.Identity;
 using Microsoft.eShopWeb.Web.Interfaces;
 using Microsoft.eShopWeb.Web.Pages.Basket;
 using Microsoft.eShopWeb.Web.ViewModels;
 using System.Linq;
 using System.Threading.Tasks;
 using StoreManager.Models;
-using StoreManager;
 
 namespace Microsoft.eShopWeb.Web.Pages.Shared.Components.BasketComponent
 {

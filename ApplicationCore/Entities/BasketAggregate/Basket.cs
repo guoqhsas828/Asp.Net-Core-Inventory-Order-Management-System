@@ -9,7 +9,7 @@ namespace StoreManager.Models
     public int BasketId { get { return Id; } set { Id = value; } }
     public string BuyerId { get; set; }
     private readonly List<BasketItem> _items = new List<BasketItem>();
-    public IReadOnlyCollection<BasketItem> Items => _items.AsReadOnly();
+    public ICollection<BasketItem> Items => _items;
 
     public void AddItem(int catalogItemId, decimal unitPrice, int quantity = 1)
     {

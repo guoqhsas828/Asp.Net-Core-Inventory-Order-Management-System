@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.eShopWeb.ApplicationCore.Interfaces;
+using Microsoft.eShopWeb.Infrastructure.Data;
+using Microsoft.eShopWeb.Infrastructure.Identity;
 using Microsoft.eShopWeb.Web.HealthChecks;
 using Microsoft.eShopWeb.Web.Interfaces;
 using Microsoft.eShopWeb.Web.Services;
@@ -22,7 +24,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mime;
-using Microsoft.eShopWeb.Infrastructure.Data;
 using StoreManager.Data;
 using StoreManager.Interfaces;
 using StoreManager.Models;
@@ -95,7 +96,11 @@ namespace Microsoft.eShopWeb.Web
       services.AddScoped(typeof(IAsyncRepository<>), typeof(EfRepository<>));
 
       services.AddScoped<ICatalogViewModelService, CachedCatalogViewModelService>();
+      services.AddTransient<IRoles, Roles>();
       services.AddScoped<IBasketService, BasketService>();
+
+      services.AddTransient<IFunctional, Functional>();
+
       services.AddScoped<IBasketViewModelService, BasketViewModelService>();
       services.AddScoped<IOrderService, OrderService>();
       services.AddScoped<IOrderRepository, OrderRepository>();
@@ -105,9 +110,6 @@ namespace Microsoft.eShopWeb.Web
 
       services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
       services.AddTransient<IEmailSender, EmailSender>();
-      services.AddTransient<IRoles, Roles>();
-
-      services.AddTransient<IFunctional, Functional>();
 
       // Add memory cache services
       services.AddMemoryCache();

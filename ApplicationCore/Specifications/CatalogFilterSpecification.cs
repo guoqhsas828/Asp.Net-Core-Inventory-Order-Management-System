@@ -1,4 +1,5 @@
-﻿using StoreManager.Models;
+﻿using Microsoft.eShopWeb.ApplicationCore.Entities;
+using StoreManager.Models;
 
 namespace StoreManager.Specifications
 {

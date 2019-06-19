@@ -1,4 +1,4 @@
-﻿@using StoreManager.Models;
+﻿@using StoreManager.Models
 @inject SignInManager<ApplicationUser> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();

@@ -13,6 +13,7 @@ namespace StoreManager.Models
       Street = "582 Springfield Ave";
     }
 
+    public int AddressId { get; set; }
     public String Street { get; set; }
 
     public String City { get; private set; }

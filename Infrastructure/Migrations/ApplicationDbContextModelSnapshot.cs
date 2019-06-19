@@ -129,6 +129,128 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("Microsoft.eShopWeb.ApplicationCore.Entities.CatalogItem", b =>
+                {
+                    b.Property<int>("CatalogItemId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CatalogBrandId");
+
+                    b.Property<int>("CatalogTypeId");
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("PictureUri");
+
+                    b.Property<decimal>("Price");
+
+                    b.HasKey("CatalogItemId");
+
+                    b.HasIndex("CatalogBrandId");
+
+                    b.HasIndex("CatalogTypeId");
+
+                    b.ToTable("CatalogItems");
+                });
+
+            modelBuilder.Entity("Microsoft.eShopWeb.ApplicationCore.Entities.OrderAggregate.CatalogItemOrdered", b =>
+                {
+                    b.Property<int>("CatalogItemOrderedId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CatalogItemId");
+
+                    b.Property<string>("PictureUri");
+
+                    b.Property<string>("ProductName");
+
+                    b.HasKey("CatalogItemOrderedId");
+
+                    b.ToTable("CatalogItemOrdered");
+                });
+
+            modelBuilder.Entity("Microsoft.eShopWeb.ApplicationCore.Entities.OrderAggregate.Order", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("BuyerId");
+
+                    b.Property<string>("Notes");
+
+                    b.Property<DateTimeOffset>("OrderDate");
+
+                    b.Property<int?>("ShipToAddressAddressId");
+
+                    b.HasKey("OrderId");
+
+                    b.HasIndex("ShipToAddressAddressId");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("Microsoft.eShopWeb.ApplicationCore.Entities.OrderAggregate.OrderItem", b =>
+                {
+                    b.Property<int>("OrderItemId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("ItemOrderedCatalogItemOrderedId");
+
+                    b.Property<int?>("OrderId");
+
+                    b.Property<decimal>("UnitPrice");
+
+                    b.Property<int>("Units");
+
+                    b.HasKey("OrderItemId");
+
+                    b.HasIndex("ItemOrderedCatalogItemOrderedId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("OrderItems");
+                });
+
+            modelBuilder.Entity("Microsoft.eShopWeb.Infrastructure.Identity.CatalogType", b =>
+                {
+                    b.Property<int>("CatalogTypeId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Type");
+
+                    b.HasKey("CatalogTypeId");
+
+                    b.ToTable("CatalogTypes");
+                });
+
+            modelBuilder.Entity("StoreManager.Models.Address", b =>
+                {
+                    b.Property<int>("AddressId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("City");
+
+                    b.Property<string>("Country");
+
+                    b.Property<string>("State");
+
+                    b.Property<string>("Street");
+
+                    b.Property<string>("ZipCode");
+
+                    b.HasKey("AddressId");
+
+                    b.ToTable("Address");
+                });
+
             modelBuilder.Entity("StoreManager.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
@@ -963,6 +1085,37 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Microsoft.eShopWeb.ApplicationCore.Entities.CatalogItem", b =>
+                {
+                    b.HasOne("StoreManager.Models.CatalogBrand", "CatalogBrand")
+                        .WithMany()
+                        .HasForeignKey("CatalogBrandId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Microsoft.eShopWeb.Infrastructure.Identity.CatalogType", "CatalogType")
+                        .WithMany()
+                        .HasForeignKey("CatalogTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Microsoft.eShopWeb.ApplicationCore.Entities.OrderAggregate.Order", b =>
+                {
+                    b.HasOne("StoreManager.Models.Address", "ShipToAddress")
+                        .WithMany()
+                        .HasForeignKey("ShipToAddressAddressId");
+                });
+
+            modelBuilder.Entity("Microsoft.eShopWeb.ApplicationCore.Entities.OrderAggregate.OrderItem", b =>
+                {
+                    b.HasOne("Microsoft.eShopWeb.ApplicationCore.Entities.OrderAggregate.CatalogItemOrdered", "ItemOrdered")
+                        .WithMany()
+                        .HasForeignKey("ItemOrderedCatalogItemOrderedId");
+
+                    b.HasOne("Microsoft.eShopWeb.ApplicationCore.Entities.OrderAggregate.Order")
+                        .WithMany("OrderItems")
+                        .HasForeignKey("OrderId");
                 });
 
             modelBuilder.Entity("StoreManager.Models.BasketItem", b =>
