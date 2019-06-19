@@ -1,7 +1,7 @@
-﻿using StoreManager.Interfaces;
-using StoreManager.Models;
+﻿using StoreManager.Models;
+using StoreManager.Interfaces;
 
-namespace Microsoft.eShopWeb.ApplicationCore.Services
+namespace StoreManager.Services
 {
     public class UriComposer : IUriComposer
     {
