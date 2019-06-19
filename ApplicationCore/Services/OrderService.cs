@@ -32,11 +32,18 @@ namespace StoreManager.Services
       {
         var catalogItem = await _itemRepository.GetByIdAsync(item.CatalogItemId);
         var itemOrdered = catalogItem;
-        var orderItem = new SalesOrderLine { Product = itemOrdered, Price = Convert.ToDouble(item.UnitPrice), Quantity = Convert.ToDouble(item.Quantity), ProductId = itemOrdered.ProductId, Amount = item.Quantity };
+        var orderItem = new SalesOrderLine { Product = itemOrdered,
+          Price = Convert.ToDouble(item.UnitPrice), Quantity = Convert.ToDouble(item.Quantity),
+          ProductId = itemOrdered.ProductId, Amount = item.Quantity };
+        orderItem.Total = orderItem.SubTotal = orderItem.Price * orderItem.Quantity;
         items.Add(orderItem);
       }
-      var order = new SalesOrder { Amount = items.Sum(t => t.Total), Remarks = shippingAddress.Street, SalesOrderLines = items }; //CustomerId = basket.BuyerId,
-
+      var order = new SalesOrder
+      {
+        Amount = items.Sum(t => t.Total), Remarks = shippingAddress.Street, SalesOrderLines = items , CustomerRefNumber = basket.BuyerId,
+        OrderDate = DateTime.Today, DeliveryDate = DateTime.Today.AddDays(1), SalesOrderName = basket.BuyerId
+      }; //CustomerId = basket.BuyerId,
+      order.Total = order.SubTotal = order.Amount;
       await _orderRepository.AddAsync(order);
     }
   }
