@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderManager", "coderush\OrderManager.csproj", "{B0DFD956-A8F2-4045-BB69-38EF481BE475}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationCore", "ApplicationCore\ApplicationCore.csproj", "{774B9AA1-ED8E-4663-9587-CA9594061F1D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{B0DFD956-A8F2-4045-BB69-38EF481BE475}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0DFD956-A8F2-4045-BB69-38EF481BE475}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B0DFD956-A8F2-4045-BB69-38EF481BE475}.Release|Any CPU.Build.0 = Release|Any CPU
+		{774B9AA1-ED8E-4663-9587-CA9594061F1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{774B9AA1-ED8E-4663-9587-CA9594061F1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{774B9AA1-ED8E-4663-9587-CA9594061F1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{774B9AA1-ED8E-4663-9587-CA9594061F1D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

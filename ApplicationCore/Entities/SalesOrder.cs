@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Threading.Tasks;
+using StoreManager.Interfaces;
 
 namespace StoreManager.Models
 {
-    public class SalesOrder : BaseEntity
+    public class SalesOrder : BaseEntity, IAggregateRoot
     {
         public int SalesOrderId { get { return Id; } set { Id = value; } }
         [Display(Name = "Order Number")]

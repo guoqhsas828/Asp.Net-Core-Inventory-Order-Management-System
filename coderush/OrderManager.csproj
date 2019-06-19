@@ -26,4 +26,8 @@
     <Folder Include="Pages\Basket\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ApplicationCore\ApplicationCore.csproj" />
+  </ItemGroup>
+
 </Project>
