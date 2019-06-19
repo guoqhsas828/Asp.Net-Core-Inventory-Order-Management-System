@@ -10,7 +10,7 @@ using StoreManager.Data;
 namespace OrderManager.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190618172707_InitDb")]
+    [Migration("20190618233121_InitDb")]
     partial class InitDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -544,8 +544,6 @@ namespace OrderManager.Migrations
 
                     b.Property<int>("CatalogBrandId");
 
-                    b.Property<int>("CatalogTypeId");
-
                     b.Property<int>("CurrencyId");
 
                     b.Property<double>("DefaultBuyingPrice");
@@ -561,13 +559,15 @@ namespace OrderManager.Migrations
                     b.Property<string>("ProductName")
                         .IsRequired();
 
+                    b.Property<int>("ProductTypeId");
+
                     b.Property<int>("UnitOfMeasureId");
 
                     b.HasKey("ProductId");
 
                     b.HasIndex("CatalogBrandId");
 
-                    b.HasIndex("CatalogTypeId");
+                    b.HasIndex("ProductTypeId");
 
                     b.ToTable("Product");
                 });
@@ -981,9 +981,9 @@ namespace OrderManager.Migrations
                         .HasForeignKey("CatalogBrandId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("StoreManager.Models.ProductType", "CatalogType")
+                    b.HasOne("StoreManager.Models.ProductType", "ProductType")
                         .WithMany()
-                        .HasForeignKey("CatalogTypeId")
+                        .HasForeignKey("ProductTypeId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <Folder Include="Models\eShopWeb\" />
+    <Folder Include="Pages\Basket\" />
   </ItemGroup>
 
 </Project>

@@ -18,7 +18,7 @@ namespace StoreManager.Data
       try
       {
         // TODO: Only run this if using a real database
-        catalogContext.Database.Migrate();
+        //catalogContext.Database.Migrate();
 
         if (!catalogContext.CatalogBrands.Any())
         {
@@ -60,9 +60,9 @@ namespace StoreManager.Data
     {
       return new List<CatalogBrand>()
       {
+         new CatalogBrand() {Brand = "Other"},
         new CatalogBrand() {Brand = "Allison"},
         new CatalogBrand() {Brand = "Jason"},
-        new CatalogBrand() {Brand = "Other"}
       };
     }
 
@@ -70,9 +70,9 @@ namespace StoreManager.Data
     {
       return new List<ProductType>()
       {
+        new ProductType() {ProductTypeName = "Other"},
         new ProductType() {ProductTypeName = "Drink"},
         new ProductType() {ProductTypeName = "Cookies"},
-        new ProductType() {ProductTypeName = "Other"},
       };
     }
 
@@ -82,17 +82,17 @@ namespace StoreManager.Data
       {
         new Product()
         {
-          CatalogTypeId = 2, CatalogBrandId = 2, Description = ".NET Bot Black Sweatshirt", ProductName = "Lemonade",
+          ProductTypeId = 3, CatalogBrandId = 3, Description = ".NET Bot Black Sweatshirt", ProductName = "Lemonade",
           DefaultSellingPrice = 19.5, ProductImageUrl = "http://catalogbaseurltobereplaced/images/products/1.png"
         },
         new Product()
         {
-          CatalogTypeId = 1, CatalogBrandId = 2, Description = ".NET Black & White Mug", ProductName = "Lemonade(s)",
+          ProductTypeId = 2, CatalogBrandId = 3, Description = ".NET Black & White Mug", ProductName = "Lemonade(s)",
           DefaultSellingPrice = 8.50, ProductImageUrl = "http://catalogbaseurltobereplaced/images/products/2.png"
         },
         new Product()
         {
-          CatalogTypeId = 2, CatalogBrandId = 5, Description = "Prism White T-Shirt", ProductName = "MilkShake",
+          ProductTypeId = 3, CatalogBrandId = 2, Description = "Prism White T-Shirt", ProductName = "MilkShake",
           DefaultSellingPrice = 12, ProductImageUrl = "http://catalogbaseurltobereplaced/images/products/3.png"
         },
       };

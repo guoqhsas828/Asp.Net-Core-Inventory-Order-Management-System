@@ -665,7 +665,7 @@ namespace OrderManager.Migrations
                     DefaultSellingPrice = table.Column<double>(nullable: false),
                     BranchId = table.Column<int>(nullable: false),
                     CurrencyId = table.Column<int>(nullable: false),
-                    CatalogTypeId = table.Column<int>(nullable: false),
+                    ProductTypeId = table.Column<int>(nullable: false),
                     CatalogBrandId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -678,8 +678,8 @@ namespace OrderManager.Migrations
                         principalColumn: "CatalogBrandId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Product_ProductType_CatalogTypeId",
-                        column: x => x.CatalogTypeId,
+                        name: "FK_Product_ProductType_ProductTypeId",
+                        column: x => x.ProductTypeId,
                         principalTable: "ProductType",
                         principalColumn: "ProductTypeId",
                         onDelete: ReferentialAction.Cascade);
@@ -801,9 +801,9 @@ namespace OrderManager.Migrations
                 column: "CatalogBrandId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Product_CatalogTypeId",
+                name: "IX_Product_ProductTypeId",
                 table: "Product",
-                column: "CatalogTypeId");
+                column: "ProductTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PurchaseOrderLine_PurchaseOrderId",

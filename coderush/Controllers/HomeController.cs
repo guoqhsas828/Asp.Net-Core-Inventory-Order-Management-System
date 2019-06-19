@@ -9,7 +9,7 @@ using StoreManager.Services;
 
 namespace StoreManager.Controllers
 {
-  [Route("[controller]/[action]")]
+  //[Route("[controller]/[action]")]
   public class HomeController : Controller
   {
     private readonly ICatalogViewModelService _catalogViewModelService;
@@ -22,8 +22,8 @@ namespace StoreManager.Controllers
     [HttpGet]
     public IActionResult Index()
     {
-      var model = new OrderManager.Views.Home.IndexModel(_catalogViewModelService);
-      return View(model);
+      var model = new OrderManager.Pages.Shared.IndexModel(_catalogViewModelService); 
+      return View(model); //model
     }
 
     public IActionResult About()

@@ -25,8 +25,8 @@ namespace StoreManager.Models
     [Display(Name = "Branch")] public int BranchId { get; set; }
     [Display(Name = "Currency")] public int CurrencyId { get; set; }
 
-    public int CatalogTypeId { get; set; }
-    public ProductType CatalogType { get; set; }
+    public int ProductTypeId { get; set; }
+    public ProductType ProductType { get; set; }
     public int CatalogBrandId { get; set; }
     public CatalogBrand CatalogBrand { get; set; }
   }

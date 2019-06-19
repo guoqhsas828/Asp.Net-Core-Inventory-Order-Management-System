@@ -6,7 +6,7 @@ namespace StoreManager.Specifications
     {
         public CatalogFilterPaginatedSpecification(int skip, int take, int? brandId, int? typeId)
             : base(i => (!brandId.HasValue || i.CatalogBrandId == brandId) &&
-                (!typeId.HasValue || i.CatalogTypeId == typeId))
+                (!typeId.HasValue || i.ProductTypeId == typeId))
         {
             ApplyPaging(skip, take);
         }

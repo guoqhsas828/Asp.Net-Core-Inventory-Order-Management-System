@@ -80,34 +80,34 @@ namespace StoreManager.Services
                 await _context.UnitOfMeasure.AddAsync(new UnitOfMeasure { UnitOfMeasureName = "PCS" });
                 await _context.SaveChangesAsync();
 
-                await _context.ProductType.AddAsync(new ProductType { ProductTypeName = "Default" });
-                await _context.SaveChangesAsync();
+                //await _context.ProductType.AddAsync(new ProductType { ProductTypeName = "Default" });
+                //await _context.SaveChangesAsync();
 
-                List<Product> products = new List<Product>() {
-                    new Product{ProductName = "Chai"},
-                    new Product{ProductName = "Chang"},
-                    new Product{ProductName = "Aniseed Syrup"},
-                    new Product{ProductName = "Chef Anton's Cajun Seasoning"},
-                    new Product{ProductName = "Chef Anton's Gumbo Mix"},
-                    new Product{ProductName = "Grandma's Boysenberry Spread"},
-                    new Product{ProductName = "Uncle Bob's Organic Dried Pears"},
-                    new Product{ProductName = "Northwoods Cranberry Sauce"},
-                    new Product{ProductName = "Mishi Kobe Niku"},
-                    new Product{ProductName = "Ikura"},
-                    new Product{ProductName = "Queso Cabrales"},
-                    new Product{ProductName = "Queso Manchego La Pastora"},
-                    new Product{ProductName = "Konbu"},
-                    new Product{ProductName = "Tofu"},
-                    new Product{ProductName = "Genen Shouyu"},
-                    new Product{ProductName = "Pavlova"},
-                    new Product{ProductName = "Alice Mutton"},
-                    new Product{ProductName = "Carnarvon Tigers"},
-                    new Product{ProductName = "Teatime Chocolate Biscuits"},
-                    new Product{ProductName = "Sir Rodney's Marmalade"}
+                //List<Product> products = new List<Product>() {
+                //    new Product{ProductName = "Chai"},
+                //    new Product{ProductName = "Chang"},
+                //    new Product{ProductName = "Aniseed Syrup"},
+                //    new Product{ProductName = "Chef Anton's Cajun Seasoning"},
+                //    new Product{ProductName = "Chef Anton's Gumbo Mix"},
+                //    new Product{ProductName = "Grandma's Boysenberry Spread"},
+                //    new Product{ProductName = "Uncle Bob's Organic Dried Pears"},
+                //    new Product{ProductName = "Northwoods Cranberry Sauce"},
+                //    new Product{ProductName = "Mishi Kobe Niku"},
+                //    new Product{ProductName = "Ikura"},
+                //    new Product{ProductName = "Queso Cabrales"},
+                //    new Product{ProductName = "Queso Manchego La Pastora"},
+                //    new Product{ProductName = "Konbu"},
+                //    new Product{ProductName = "Tofu"},
+                //    new Product{ProductName = "Genen Shouyu"},
+                //    new Product{ProductName = "Pavlova"},
+                //    new Product{ProductName = "Alice Mutton"},
+                //    new Product{ProductName = "Carnarvon Tigers"},
+                //    new Product{ProductName = "Teatime Chocolate Biscuits"},
+                //    new Product{ProductName = "Sir Rodney's Marmalade"}
 
-                };
-                await _context.Product.AddRangeAsync(products);
-                await _context.SaveChangesAsync();
+                //};
+                //await _context.Product.AddRangeAsync(products);
+                //await _context.SaveChangesAsync();
 
                 await _context.CustomerType.AddAsync(new CustomerType { CustomerTypeName = "Default" });
                 await _context.SaveChangesAsync();
