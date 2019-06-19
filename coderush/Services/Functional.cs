@@ -234,64 +234,75 @@ namespace StoreManager.Services
       await CreateUser(_superAdminDefaultOptions.Email, _superAdminDefaultOptions.Password, "Super", "Admin");
     }
 
-    public async Task<IdentityResult> CreateUser(string email, string passwd, string firstName, string lastName)
-    {
-      try
+      public async Task CreateUserProfile(ApplicationUser existingUser, string firstName, string lastName)
       {
-        var existingUser = await _userManager.FindByEmailAsync(email);
-        if (existingUser != null)
+        var profile = _context.UserProfile.SingleOrDefault(x => x.ApplicationUserId.Equals(existingUser.Id));
+        if (profile == null)
         {
-          var profile = _context.UserProfile.SingleOrDefault(x => x.ApplicationUserId.Equals(existingUser.Id));
-          if (profile == null)
-          {
-            await _roles.GenerateRolesFromPagesAsync();
-            //add to user profile
-            profile = new UserProfile();
-            profile.FirstName = firstName;
-            profile.LastName = lastName;
-            profile.Email = email;
-            profile.ApplicationUserId = existingUser.Id;
-            await _context.UserProfile.AddAsync(profile);
-            await _context.SaveChangesAsync();
-            await _roles.AddToRoles(existingUser.Id);
-          }
-
-          return await _userManager.AddPasswordAsync(existingUser, passwd);
-        }
-
-        await _roles.GenerateRolesFromPagesAsync();
-
-        ApplicationUser newUser = new ApplicationUser();
-        newUser.Email = email;
-        newUser.UserName = email;
-        newUser.EmailConfirmed = true;
-
-        var result = await _userManager.CreateAsync(newUser, passwd);
-
-        if (result.Succeeded)
-        {
+          await _roles.GenerateRolesFromPagesAsync();
           //add to user profile
-          UserProfile profile = new UserProfile();
-          profile.FirstName = firstName;
-          profile.LastName = lastName;
-          profile.Email = email;
-          profile.ApplicationUserId = newUser.Id;
+          profile = new UserProfile
+          {
+            FirstName = firstName,
+            LastName = lastName,
+            Email = existingUser.Email,
+            ApplicationUserId = existingUser.Id
+          };
           await _context.UserProfile.AddAsync(profile);
           await _context.SaveChangesAsync();
-
-          await _roles.AddToRoles(newUser.Id);
+          await _roles.AddToRoles(existingUser.Id);
         }
-
-        return result;
       }
-      catch (Exception)
+
+      public async Task CreateCustomerProfile(ApplicationUser existingUser, string firstName, string lastName)
       {
-
-        throw;
-      }
+        var customer = _context.Customer.SingleOrDefault(x => x.Email.Equals(existingUser.Email));
+        if (customer == null)
+        {
+          //add to user profile
+          customer = new Customer
+          {
+            CustomerName = firstName + " " + lastName,
+            Email = existingUser.Email,
+            Phone = existingUser.PhoneNumber
+          };
+          await _context.Customer.AddAsync(customer);
+          await _context.SaveChangesAsync();
+        }
     }
 
-    public async Task<string> UploadFile(List<IFormFile> files, IHostingEnvironment env, string uploadFolder)
+    public async Task<IdentityResult> CreateUser(string email, string passwd, string firstName, string lastName)
+      {
+        try
+        {
+          var existingUser = await _userManager.FindByEmailAsync(email);
+          if (existingUser != null)
+          {
+            await CreateUserProfile(existingUser, firstName, lastName);
+            await CreateCustomerProfile(existingUser, firstName, lastName);
+            existingUser.PhoneNumberConfirmed = true;
+            return await _userManager.UpdateAsync(existingUser);
+          }
+
+          var newUser = new ApplicationUser {Email = email, UserName = email, EmailConfirmed = true};
+
+          var result = await _userManager.CreateAsync(newUser, passwd);
+          if (result.Succeeded)
+          {
+            await CreateUserProfile(newUser, firstName, lastName);
+            await CreateCustomerProfile(newUser, firstName, lastName);
+        }
+
+          return result;
+        }
+        catch (Exception)
+        {
+
+          throw;
+        }
+      }
+
+      public async Task<string> UploadFile(List<IFormFile> files, IHostingEnvironment env, string uploadFolder)
         {
             var result = "";
 

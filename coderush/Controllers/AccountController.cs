@@ -28,6 +28,7 @@ namespace StoreManager.Controllers
     private readonly ILogger _logger;
     private readonly ApplicationDbContext _context;
     private readonly IBasketService _basketService;
+    private readonly IFunctional _functional;
 
     public AccountController(
         UserManager<ApplicationUser> userManager,
@@ -35,7 +36,8 @@ namespace StoreManager.Controllers
         IEmailSender emailSender,
         ILogger<AccountController> logger,
         ApplicationDbContext ctx, 
-        IBasketService basketService)
+        IBasketService basketService,
+        IFunctional functional)
     {
       _userManager = userManager;
       _signInManager = signInManager;
@@ -43,6 +45,7 @@ namespace StoreManager.Controllers
       _logger = logger;
       _context = ctx;
       _basketService = basketService;
+      _functional = functional;
     }
 
     [TempData]
@@ -239,18 +242,13 @@ namespace StoreManager.Controllers
       ViewData["ReturnUrl"] = returnUrl;
       if (ModelState.IsValid)
       {
-        var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-        var result = await _userManager.CreateAsync(user, model.Password);
+        var result = await _functional.CreateUser(model.Email, model.Password, "", model.Email);
+        //new ApplicationUser { UserName = model.Email, Email = model.Email };
+        //var result = await _userManager.CreateAsync(user, model.Password);
         if (result.Succeeded)
         {
+          var user = await _userManager.FindByEmailAsync(model.Email);
           await _signInManager.SignInAsync(user, isPersistent: false);
-          var existingCustomer = _context.Customer.FirstOrDefault(c => c.Email == model.Email);
-          if (existingCustomer == null)
-          {
-            var customer = new Customer() { };
-            _context.Customer.Add(customer);
-            await _context.SaveChangesAsync();
-          }
           return RedirectToLocal(returnUrl);
         }
         AddErrors(result);
@@ -337,6 +335,7 @@ namespace StoreManager.Controllers
           if (result.Succeeded)
           {
             await _signInManager.SignInAsync(user, isPersistent: false);
+            await _functional.CreateUser(user.Email, user.PasswordHash, "", model.Email);
             _logger.LogInformation("User created an account using {Name} provider.", info.LoginProvider);
             return RedirectToLocal(returnUrl);
           }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StoreManager.Models
 {
-  public class Customer
+  public class Customer : BaseEntity
   {
     public Customer()
     {
@@ -15,7 +15,12 @@ namespace StoreManager.Models
       ZipCode = "07901";
     }
 
-    public int CustomerId { get; set; }
+    public int CustomerId
+    {
+      get { return Id;}
+      set { Id = value; }
+    }
+
     [Required]
     public string CustomerName { get; set; }
     [Display(Name = "Customer Type")]
