@@ -101,8 +101,10 @@ namespace StoreManager
       services.AddTransient<IEmailSender, EmailSender>();
 
       services.AddTransient<INumberSequence, Services.NumberSequence>();
+      services.AddScoped(typeof(IAsyncRepository<>), typeof(EfRepository<>));
 
       services.AddTransient<IRoles, Roles>();
+      services.AddScoped<IBasketService, BasketService>();
 
       services.AddTransient<IFunctional, Functional>();
 

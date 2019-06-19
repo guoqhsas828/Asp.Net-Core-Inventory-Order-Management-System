@@ -9,21 +9,11 @@ using StoreManager.Services;
 
 namespace StoreManager.Controllers
 {
-  //[Route("[controller]/[action]")]
   public class HomeController : Controller
   {
-    private readonly ICatalogViewModelService _catalogViewModelService;
-
-    public HomeController(ICatalogViewModelService catalogService)
-    {
-      _catalogViewModelService = catalogService;
-    }
-
-    [HttpGet]
     public IActionResult Index()
     {
-      var model = new OrderManager.Pages.Shared.IndexModel(_catalogViewModelService); 
-      return View(model); //model
+      return RedirectToAction("UserProfile", "UserRole");
     }
 
     public IActionResult About()
