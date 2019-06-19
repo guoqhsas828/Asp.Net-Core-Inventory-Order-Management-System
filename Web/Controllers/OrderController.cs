@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.eShopWeb.ApplicationCore.Interfaces;
-using Microsoft.eShopWeb.ApplicationCore.Specifications;
 using Microsoft.eShopWeb.Web.ViewModels;
 using System.Linq;
 using System.Threading.Tasks;
+using StoreManager.Interfaces;
+using StoreManager.Specifications;
 
 namespace Microsoft.eShopWeb.Web.Controllers
 {
@@ -30,20 +32,20 @@ namespace Microsoft.eShopWeb.Web.Controllers
           .Select(o => new OrderViewModel()
           {
             OrderDate = o.OrderDate,
-            OrderItems = o.OrderItems?.Select(oi => new OrderItemViewModel()
+            OrderItems = o.SalesOrderLines?.Select(oi => new OrderItemViewModel()
             {
               Discount = 0,
-              PictureUrl = _uriComposer.ComposePicUri(oi.ItemOrdered.PictureUri),
-              ProductId = oi.ItemOrdered.CatalogItemId,
-              ProductName = oi.ItemOrdered.ProductName,
-              UnitPrice = oi.UnitPrice,
-              Units = oi.Units
+              PictureUrl = _uriComposer.ComposePicUri(oi.Product.ProductImageUrl),
+              ProductId = oi.Product.ProductId,
+              ProductName = oi.Product.ProductName,
+              UnitPrice = Convert.ToDecimal(oi.Price),
+              Units = Convert.ToInt32(oi.Quantity)
             }).ToList(),
             OrderNumber = o.Id,
-            ShippingAddress = o.ShipToAddress,
-            OrderNotes = o.Notes,
+            //ShippingAddress = o.ShipToAddress,
+            //OrderNotes = o.Notes,
             Status = "Pending",
-            Total = o.Total()
+            Total = Convert.ToDecimal(o.Total)
 
           });
       return View(viewModel);
@@ -61,20 +63,20 @@ namespace Microsoft.eShopWeb.Web.Controllers
       var viewModel = new OrderViewModel()
       {
         OrderDate = order.OrderDate,
-        OrderItems = order.OrderItems.Select(oi => new OrderItemViewModel()
+        OrderItems = order.SalesOrderLines.Select(oi => new OrderItemViewModel()
         {
           Discount = 0,
-          PictureUrl = _uriComposer.ComposePicUri(oi.ItemOrdered.PictureUri),
-          ProductId = oi.ItemOrdered.CatalogItemId,
-          ProductName = oi.ItemOrdered.ProductName,
-          UnitPrice = oi.UnitPrice,
-          Units = oi.Units
+          PictureUrl = _uriComposer.ComposePicUri(oi.Product.ProductImageUrl),
+          ProductId = oi.Product.ProductId,
+          ProductName = oi.Product.ProductName,
+          UnitPrice =Convert.ToDecimal( oi.Price),
+          Units = Convert.ToInt32(oi.Quantity)
         }).ToList(),
         OrderNumber = order.Id,
-        ShippingAddress = order.ShipToAddress,
-        OrderNotes = order.Notes,
+        //ShippingAddress = order.ShipToAddress,
+        //OrderNotes = order.Notes,
         Status = "Pending",
-        Total = order.Total()
+        Total = Convert.ToDecimal(order.Total)
       };
       return View(viewModel);
     }

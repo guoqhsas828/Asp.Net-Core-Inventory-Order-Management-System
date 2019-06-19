@@ -94,15 +94,6 @@ namespace StoreManager
       // Get Super Admin Default options
       services.Configure<SuperAdminDefaultOptions>(Configuration.GetSection("SuperAdminDefaultOptions"));
 
-      services.AddScoped(typeof(IAsyncRepository<>), typeof(EfRepository<>));
-
-      services.AddScoped<ICatalogViewModelService, CachedCatalogViewModelService>();
-      services.AddScoped<IBasketService, BasketService>();
-      services.AddScoped<IBasketViewModelService, BasketViewModelService>();
-      services.AddScoped<IOrderService, OrderService>();
-      services.AddScoped<IOrderRepository, OrderRepository>();
-      services.AddScoped<CatalogViewModelService>();
-      services.Configure<CatalogSettings>(Configuration);
       services.AddSingleton<IUriComposer>(new UriComposer(Configuration.Get<CatalogSettings>()));
 
       // Add email services.

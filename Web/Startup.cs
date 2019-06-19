@@ -10,11 +10,6 @@ using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.eShopWeb.ApplicationCore.Interfaces;
-using Microsoft.eShopWeb.ApplicationCore.Services;
-using Microsoft.eShopWeb.Infrastructure.Data;
-using Microsoft.eShopWeb.Infrastructure.Identity;
-using Microsoft.eShopWeb.Infrastructure.Logging;
-using Microsoft.eShopWeb.Infrastructure.Services;
 using Microsoft.eShopWeb.Web.HealthChecks;
 using Microsoft.eShopWeb.Web.Interfaces;
 using Microsoft.eShopWeb.Web.Services;
@@ -27,6 +22,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mime;
+using Microsoft.eShopWeb.Infrastructure.Data;
+using StoreManager.Data;
+using StoreManager.Interfaces;
+using StoreManager.Models;
+using StoreManager.Services;
 
 namespace Microsoft.eShopWeb.Web
 {
@@ -57,7 +57,7 @@ namespace Microsoft.eShopWeb.Web
         c.UseInMemoryDatabase("Catalog"));
 
       // Add Identity DbContext
-      services.AddDbContext<AppIdentityDbContext>(options =>
+      services.AddDbContext<ApplicationDbContext>(options =>
         options.UseInMemoryDatabase("Identity"));
 
       ConfigureServices(services);
@@ -77,7 +77,7 @@ namespace Microsoft.eShopWeb.Web
         c.UseSqlServer(connStr));
 
       // Add Identity DbContext
-      services.AddDbContext<AppIdentityDbContext>(options =>
+      services.AddDbContext<ApplicationDbContext>(options =>
         options.UseSqlServer(connStr));
 
       ConfigureServices(services);
@@ -105,6 +105,9 @@ namespace Microsoft.eShopWeb.Web
 
       services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
       services.AddTransient<IEmailSender, EmailSender>();
+      services.AddTransient<IRoles, Roles>();
+
+      services.AddTransient<IFunctional, Functional>();
 
       // Add memory cache services
       services.AddMemoryCache();
@@ -157,7 +160,7 @@ namespace Microsoft.eShopWeb.Web
         {
           services.AddIdentity<ApplicationUser, IdentityRole>()
             .AddDefaultUI(UIFramework.Bootstrap4)
-            .AddEntityFrameworkStores<AppIdentityDbContext>()
+            .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
         }
       }

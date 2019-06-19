@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.eShopWeb.Infrastructure.Data;
-using Microsoft.eShopWeb.Infrastructure.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
+using Microsoft.eShopWeb.Infrastructure.Data;
+using StoreManager.Data;
+using StoreManager.Models;
 
 namespace Microsoft.eShopWeb.Web
 {
@@ -23,11 +24,11 @@ namespace Microsoft.eShopWeb.Web
                 var loggerFactory = services.GetRequiredService<ILoggerFactory>();
                 try
                 {
-                    var catalogContext = services.GetRequiredService<CatalogContext>();
+                    var catalogContext = services.GetRequiredService<ApplicationDbContext>();
                     await CatalogContextSeed.SeedAsync(catalogContext, loggerFactory);
 
-                    var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
-                    await AppIdentityDbContextSeed.SeedAsync(userManager);
+                    //var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+                    //await AppIdentityDbContextSeed.SeedAsync(userManager);
                 }
                 catch (Exception ex)
                 {

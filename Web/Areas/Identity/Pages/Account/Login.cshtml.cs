@@ -8,8 +8,8 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.eShopWeb.Infrastructure.Identity;
 using Microsoft.Extensions.Logging;
+using StoreManager.Models;
 
 namespace Microsoft.eShopWeb.Web.Areas.Identity.Pages.Account
 {
