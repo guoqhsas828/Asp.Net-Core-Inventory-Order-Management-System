@@ -47,7 +47,7 @@ namespace Microsoft.eShopWeb.Web.Controllers
             OrderNumber = o.Id,
             //ippingAddress = o.ShipToAddress,
             OrderNotes = o.Remarks,
-            Status = "Pending",
+            Status = o.CustomerRefNumber,
             Total = Convert.ToDecimal(o.Total),
           });
       return View(viewModel);
@@ -79,7 +79,7 @@ namespace Microsoft.eShopWeb.Web.Controllers
         OrderNumber = order.Id,
         ShippingAddress = new Address(customer?.Address),
         OrderNotes = order.Remarks,
-        Status = "Pending",
+        Status = order.CustomerRefNumber,
         Total = Convert.ToDecimal( order.Total)
       };
       return View(viewModel);

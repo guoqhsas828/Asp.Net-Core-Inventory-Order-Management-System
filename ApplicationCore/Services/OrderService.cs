@@ -34,6 +34,7 @@ namespace StoreManager.Services
       Guard.Against.NullBasket(basketId, basket);
       Guard.Against.NullBuyerId(basket?.BuyerId, basket);
       var items = new List<SalesOrderLine>();
+      int? ccy = null;
       foreach (var item in basket.Items)
       {
         var catalogItem = await _itemRepository.GetByIdAsync(item.CatalogItemId);
@@ -42,21 +43,26 @@ namespace StoreManager.Services
           Price = Convert.ToDouble(item.UnitPrice), Quantity = Convert.ToDouble(item.Quantity),
           ProductId = itemOrdered.ProductId, Amount = item.Quantity };
         orderItem.Total = orderItem.SubTotal = orderItem.Price * orderItem.Quantity;
+        if (orderItem.Product != null) ccy = orderItem.Product.CurrencyId;
         items.Add(orderItem);
       }
 
       var customer = _customerRepository.ListAsync(new CustomerSpecification(basket?.BuyerId)).Result.FirstOrDefault();
       var order = new SalesOrder
       {
-        Amount = items.Sum(t => t.Total), Remarks = shippingAddress.Street, SalesOrderLines = items ,
-        CustomerRefNumber = basket.BuyerId,
+        Amount = items.Sum(t => t.Total),  SalesOrderLines = items ,
+        CustomerRefNumber = "Pending",
         OrderDate = DateTime.Today,
         DeliveryDate = DateTime.Today.AddDays(1),
         SalesOrderName = basket.BuyerId,
-      }; //
+        Remarks = "Pick up",
+      }; 
 
       if (customer != null)
         order.CustomerId = customer.CustomerId;
+
+      if (ccy.HasValue)
+        order.CurrencyId = ccy.Value;
 
       order.Total = order.SubTotal = order.Amount;
       await _orderRepository.AddAsync(order);

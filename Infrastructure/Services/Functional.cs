@@ -44,15 +44,28 @@ namespace StoreManager.Services
     {
       try
       {
+        if (_context.ProductType.Any())
+          return;
 
-        await _context.BillType.AddAsync(new BillType {BillTypeName = "Default"});
-        await _context.SaveChangesAsync();
+        if (!_context.BillType.Any())
+        {
+          await _context.BillType.AddAsync(new BillType {BillTypeName = "Default"});
+          await _context.SaveChangesAsync();
 
-        await _context.Branch.AddAsync(new Branch {BranchName = "Default"});
-        await _context.SaveChangesAsync();
+        }
 
-        await _context.Warehouse.AddAsync(new Warehouse {WarehouseName = "Default"});
-        await _context.SaveChangesAsync();
+        if (!_context.Branch.Any())
+        {
+          await _context.Branch.AddAsync(new Branch {BranchName = "Default"});
+          await _context.SaveChangesAsync();
+        }
+
+        if (!_context.Branch.Any())
+        {
+          await _context.Warehouse.AddAsync(new Warehouse { WarehouseName = "Default" });
+          await _context.SaveChangesAsync();
+
+        }
 
         await _context.CashBank.AddAsync(new CashBank {CashBankName = "Default"});
         await _context.SaveChangesAsync();
@@ -102,47 +115,41 @@ namespace StoreManager.Services
           await _context.SaveChangesAsync();
         }
 
-        await _context.CustomerType.AddAsync(new CustomerType {CustomerTypeName = "Default"});
-        await _context.SaveChangesAsync();
-
-        List<Customer> customers = new List<Customer>()
+        if (!_context.CustomerType.Any())
         {
-          new Customer {CustomerName = "Hanari Carnes", Address = "Rua do Paço, 67"},
-          new Customer {CustomerName = "Old World Delicatessen", Address = "2743 Bering St."}
-        };
-        await _context.Customer.AddRangeAsync(customers);
-        await _context.SaveChangesAsync();
+          await _context.CustomerType.AddAsync(new CustomerType {CustomerTypeName = "Default"});
+          await _context.SaveChangesAsync();
+        }
+
+        if (!_context.Customer.Any())
+        {
+          List<Customer> customers = new List<Customer>()
+          {
+            new Customer {CustomerName = "Hanari Carnes", Address = "Rua do Paço, 67"},
+            new Customer {CustomerName = "Old World Delicatessen", Address = "2743 Bering St."}
+          };
+          await _context.Customer.AddRangeAsync(customers);
+          await _context.SaveChangesAsync();
+
+        }
 
         await _context.VendorType.AddAsync(new VendorType {VendorTypeName = "Default"});
         await _context.SaveChangesAsync();
 
-        List<Vendor> vendors = new List<Vendor>()
+        if (!_context.Vendor.Any())
         {
-          new Vendor {VendorName = "Exotic Liquids", Address = "49 Gilbert St."},
-          new Vendor {VendorName = "New Orleans Cajun Delights", Address = "P.O. Box 78934"},
-          new Vendor {VendorName = "Grandma Kelly's Homestead", Address = "707 Oxford Rd."},
-          new Vendor {VendorName = "Tokyo Traders", Address = "9-8 Sekimai Musashino-shi"},
-          new Vendor {VendorName = "Cooperativa de Quesos 'Las Cabras'", Address = "Calle del Rosal 4"},
-          new Vendor {VendorName = "Mayumi's", Address = "92 Setsuko Chuo-ku"},
-          new Vendor {VendorName = "Pavlova, Ltd.", Address = "74 Rose St. Moonie Ponds"},
-          new Vendor {VendorName = "Specialty Biscuits, Ltd.", Address = "29 King's Way"},
-          new Vendor {VendorName = "PB Knäckebröd AB", Address = "Kaloadagatan 13"},
-          new Vendor {VendorName = "Refrescos Americanas LTDA", Address = "Av. das Americanas 12.890"},
-          new Vendor {VendorName = "Heli Süßwaren GmbH & Co. KG", Address = "Tiergartenstraße 5"},
-          new Vendor {VendorName = "Plutzer Lebensmittelgroßmärkte AG", Address = "Bogenallee 51"},
-          new Vendor {VendorName = "Nord-Ost-Fisch Handelsgesellschaft mbH", Address = "Frahmredder 112a"},
-          new Vendor {VendorName = "Formaggi Fortini s.r.l.", Address = "Viale Dante, 75"},
-          new Vendor {VendorName = "Norske Meierier", Address = "Hatlevegen 5"},
-          new Vendor {VendorName = "Bigfoot Breweries", Address = "3400 - 8th Avenue Suite 210"},
-          new Vendor {VendorName = "Svensk Sjöföda AB", Address = "Brovallavägen 231"},
-          new Vendor {VendorName = "Aux joyeux ecclésiastiques", Address = "203, Rue des Francs-Bourgeois"},
-          new Vendor
+          var vendors = new List<Vendor>()
           {
-            VendorName = "New England Seafood Cannery", Address = "Order Processing Dept. 2100 Paul Revere Blvd."
-          }
-        };
-        await _context.Vendor.AddRangeAsync(vendors);
-        await _context.SaveChangesAsync();
+            new Vendor {VendorName = "Exotic Liquids", Address = "49 Gilbert St."},
+            new Vendor
+            {
+              VendorName = "New England Seafood Cannery", Address = "Order Processing Dept. 2100 Paul Revere Blvd."
+            }
+          };
+          await _context.Vendor.AddRangeAsync(vendors);
+          await _context.SaveChangesAsync();
+
+        }
 
       }
       catch (Exception)
