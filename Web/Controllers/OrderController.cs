@@ -6,6 +6,7 @@ using Microsoft.eShopWeb.Web.ViewModels;
 using System.Linq;
 using System.Threading.Tasks;
 using StoreManager.Interfaces;
+using StoreManager.Models;
 using StoreManager.Specifications;
 
 namespace Microsoft.eShopWeb.Web.Controllers
@@ -17,17 +18,19 @@ namespace Microsoft.eShopWeb.Web.Controllers
   {
     private readonly IOrderRepository _orderRepository;
     private readonly IUriComposer _uriComposer;
-    public OrderController(IOrderRepository orderRepository, IUriComposer uriComposer)
+    private readonly IAsyncRepository<Customer> _customeRepository;
+    public OrderController(IOrderRepository orderRepository, IUriComposer uriComposer, IAsyncRepository<Customer> customerRepo)
     {
       _orderRepository = orderRepository;
       _uriComposer = uriComposer;
+      _customeRepository = customerRepo;
     }
 
     [HttpGet()]
     public async Task<IActionResult> MyOrders()
     {
       var orders = await _orderRepository.ListAsync(new CustomerOrdersWithItemsSpecification(User.Identity.Name));
-
+      
       var viewModel = orders
           .Select(o => new OrderViewModel()
           {
@@ -42,7 +45,7 @@ namespace Microsoft.eShopWeb.Web.Controllers
               Units = Convert.ToInt32(oi.Quantity)
             }).ToList(),
             OrderNumber = o.Id,
-            //ShippingAddress = o.ShipToAddress,
+            //ippingAddress = o.ShipToAddress,
             OrderNotes = o.Remarks,
             Status = "Pending",
             Total = Convert.ToDecimal(o.Total),
@@ -59,6 +62,8 @@ namespace Microsoft.eShopWeb.Web.Controllers
       {
         return BadRequest("No such order found for this user.");
       }
+
+      var customer = _customeRepository.ListAsync(new CustomerSpecification(order.SalesOrderName)).Result.FirstOrDefault();
       var viewModel = new OrderViewModel()
       {
         OrderDate = order.OrderDate,
@@ -72,7 +77,7 @@ namespace Microsoft.eShopWeb.Web.Controllers
           Units = Convert.ToInt32(oi.Quantity)
         }).ToList(),
         OrderNumber = order.Id,
-        //ShippingAddress = order.ShipToAddress,
+        ShippingAddress = new Address(customer?.Address),
         OrderNotes = order.Remarks,
         Status = "Pending",
         Total = Convert.ToDecimal( order.Total)
