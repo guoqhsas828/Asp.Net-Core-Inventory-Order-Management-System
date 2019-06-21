@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Twilio;
+using Twilio.Rest.Api.V2010.Account;
 
 namespace StoreManager.Services
 {
@@ -59,5 +61,19 @@ namespace StoreManager.Services
             
             return Task.CompletedTask;
         }
-    }
+
+      public async Task SendSmsMessage(string msgText, string phoneNumber)
+      {
+        var accountSid = _smtpOptions.AcctSid;
+        var authToken = _smtpOptions.AccToken;
+        var toPhoneNumber = phoneNumber.StartsWith("+") ? phoneNumber : (phoneNumber.Length ==10 ? "+1" : "+") + phoneNumber;
+        TwilioClient.Init(accountSid, authToken);
+
+        var message = MessageResource.Create(
+          body: msgText,
+          from: new Twilio.Types.PhoneNumber(_smtpOptions.FromNumber),
+          to: new Twilio.Types.PhoneNumber(toPhoneNumber)
+        );
+      }
+  }
 }

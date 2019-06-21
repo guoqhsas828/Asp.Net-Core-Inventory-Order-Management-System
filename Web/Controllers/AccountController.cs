@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.eShopWeb.ApplicationCore.Interfaces;
+using StoreManager;
 using StoreManager.Services;
 using Microsoft.eShopWeb.Web.ViewModels.Account;
 using System;

@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.eShopWeb.Web.Services;
+using StoreManager;
 using Microsoft.eShopWeb.Web.ViewModels;
 using System.Threading.Tasks;
 using StoreManager.Services;

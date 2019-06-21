@@ -15,6 +15,8 @@ namespace StoreManager.Services
         public string fromEmail { get; set; }
         public string fromFullName { get; set; }
         public bool IsDefault { get; set; }
-
+      public string AcctSid { get; set; }
+      public string AccToken { get; set; }
+      public string FromNumber { get; set; }
     }
 }

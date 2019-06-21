@@ -19,18 +19,21 @@ namespace StoreManager.Services
     private readonly IAsyncRepository<Product> _itemRepository;
     private readonly IAsyncRepository<Customer> _customerRepository;
     private readonly IAsyncRepository<Branch> _branchRepository;
+    private readonly IEmailSender _emailSender;
 
     public OrderService(IAsyncRepository<Basket> basketRepository,
         IAsyncRepository<Product> itemRepository,
         IAsyncRepository<SalesOrder> orderRepository,
       IAsyncRepository<Customer> customerRepo,
-      IAsyncRepository<Branch> branchRepo)
+      IAsyncRepository<Branch> branchRepo,
+      IEmailSender emailSender)
     {
       _orderRepository = orderRepository;
       _basketRepository = basketRepository;
       _itemRepository = itemRepository;
       _customerRepository = customerRepo;
       _branchRepository = branchRepo;
+      _emailSender = emailSender;
     }
 
     public async Task CreateOrderAsync(int basketId, Address shippingAddress)
@@ -83,24 +86,22 @@ namespace StoreManager.Services
 
       foreach (var branch in contacts.Where(b => !string.IsNullOrWhiteSpace(b.Phone)))
       {
-        SendSmsMessage($"New Order {order.SalesOrderId}: {order.SalesOrderName}", branch.Phone);
+        await SendSmsMessage(order, branch, branch.Phone);
       }
     }
 
-    public static void SendSmsMessage(string msgText, string phoneNumber)
+    public async Task SendSmsMessage(SalesOrder order, Branch branch, string phoneNumber)
     {
-      // Find your Account Sid and Token at twilio.com/console
-      // DANGER! This is insecure. See http://twil.io/secure
-      const string accountSid = "ACb67669cc96d3515c8f72350de005ac27";
-      const string authToken = "064ed763e077f935b9c8e4591a4e30c4";
+      string msgText = $"SalesOrder# {order.SalesOrderId} from {order.SalesOrderName}: " + Environment.NewLine;
+      foreach (var orderItem in order.SalesOrderLines)
+      {
+        if (orderItem.Product.BranchId != branch.BranchId)
+          continue;
 
-      TwilioClient.Init(accountSid, authToken);
+        msgText += $"{orderItem.Quantity} {orderItem.Product.ProductName} " + Environment.NewLine;
+      }
 
-      var message = MessageResource.Create(
-          body: msgText,
-          from: new Twilio.Types.PhoneNumber("+17323147277"),
-          to: new Twilio.Types.PhoneNumber("+1"+phoneNumber)
-      );
+      await _emailSender.SendSmsMessage(msgText, phoneNumber);
     }
   }
 }

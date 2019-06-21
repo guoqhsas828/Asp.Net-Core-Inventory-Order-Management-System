@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using Microsoft.eShopWeb.Infrastructure.Extensions;
 using Microsoft.eShopWeb.Web;
 using Microsoft.eShopWeb.Web.Interfaces;
 using Microsoft.eShopWeb.Web.Services;
@@ -35,12 +36,8 @@ namespace StoreManager
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
-      var connStr = Configuration.GetConnectionString(
-        Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production"
-          ? "CatalogProdConn" : "DefaultConnection");
-
-      services.AddDbContext<ApplicationDbContext>(options =>
-          options.UseSqlServer(connStr));
+      ServiceConfigurationHelper.ConfigSharedServices(Configuration, services);
+      ServiceConfigurationHelper.ConfigureCatalogServices(Configuration, services);
 
       // Get Identity Default Options
       IConfigurationSection identityDefaultOptionsConfigurationSection = Configuration.GetSection("IdentityDefaultOptions");
@@ -85,32 +82,11 @@ namespace StoreManager
               options.SlidingExpiration = identityDefaultOptions.SlidingExpiration;
       });
 
-      // Get SendGrid configuration options
-      services.Configure<SendGridOptions>(Configuration.GetSection("SendGridOptions"));
-
-      // Get SMTP configuration options
-      services.Configure<SmtpOptions>(Configuration.GetSection("SmtpOptions"));
 
       // Get Super Admin Default options
       services.Configure<SuperAdminDefaultOptions>(Configuration.GetSection("SuperAdminDefaultOptions"));
 
-      services.Configure<CatalogSettings>(Configuration);
-      var catalogSettings = Configuration.Get<CatalogSettings>();
-      var catalogUrl = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production"
-         ? Environment.GetEnvironmentVariable("CatalogBaseUrl") : catalogSettings.CatalogBaseUrl;
-      services.AddSingleton<IUriComposer>(new UriComposer(catalogSettings));
-
-      // Add email services.
-      services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
-      services.AddTransient<IEmailSender, EmailSender>();
-
       services.AddTransient<INumberSequence, Services.NumberSequence>();
-      services.AddScoped(typeof(IAsyncRepository<>), typeof(EfRepository<>));
-
-      services.AddTransient<IRoles, Roles>();
-      services.AddScoped<IBasketService, BasketService>();
-
-      services.AddTransient<IFunctional, Functional>();
 
       services.AddMvc()
       .AddJsonOptions(options =>
@@ -121,15 +97,6 @@ namespace StoreManager
 
       });
 
-      // Add memory cache services
-      services.AddMemoryCache();
-
-      services.AddRouting(options =>
-      {
-        // Replace the type and the name used to refer to it with your own
-        // IOutboundParameterTransformer implementation
-        options.ConstraintMap["slugify"] = typeof(SlugifyParameterTransformer);
-      });
 
       services.AddMvc(options =>
           {
@@ -184,26 +151,8 @@ namespace StoreManager
       // specifying the Swagger JSON endpoint.
       app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"); });
 
-      //app.UseMvc(routes =>
-      //{
-      //  routes.MapRoute(
-      //            name: "default",
-      //            template: "{controller=UserRole}/{action=UserProfile}/{id?}");
-      //});
-
       app.UseMvc(routes =>
       {
-        //routes.MapRoute(
-        //name: "identity",
-        //template: "Identity/{controller=Account}/{action=Register}/{id?}");
-
-        //routes.MapRoute(
-        //name: "default",
-        //template: "{controller=Home}/{action=Index}/{id?}");
-        //routes.MapRoute(
-        //    name: "default",
-        //    template: "{controller:slugify=Home}/{action:slugify=Index}/{id?}");
-
         routes.MapRoute(
                   name: "default",
                   template: "{controller=UserRole}/{action=UserProfile}/{id?}");

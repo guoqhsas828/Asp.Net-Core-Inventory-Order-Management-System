@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mime;
+using Microsoft.eShopWeb.Infrastructure.Extensions;
 using StoreManager.Data;
 using StoreManager.Interfaces;
 using StoreManager.Models;
@@ -69,60 +70,24 @@ namespace Microsoft.eShopWeb.Web
       // use real database
       // Requires LocalDB which can be installed with SQL Server Express 2016
       // https://www.microsoft.com/en-us/download/details.aspx?id=54284
-      var connStr = Configuration.GetConnectionString(
-        Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production"
-          ? "CatalogProdConn"
-          : "CatalogConnection");
-
-      services.AddDbContext<CatalogContext>(c =>
-        c.UseSqlServer(connStr));
-
-      // Add Identity DbContext
-      services.AddDbContext<ApplicationDbContext>(options =>
-        options.UseSqlServer(connStr));
 
       ConfigureServices(services);
     }
 
-
-
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
+      ServiceConfigurationHelper.ConfigSharedServices(Configuration, services);
+      ServiceConfigurationHelper.ConfigureCatalogServices(Configuration, services);
       ConfigureCookieSettings(services);
 
       CreateIdentityIfNotCreated(services);
 
-      services.AddScoped(typeof(IAsyncRepository<>), typeof(EfRepository<>));
-
       services.AddScoped<ICatalogViewModelService, CachedCatalogViewModelService>();
-      services.AddTransient<IRoles, Roles>();
-      services.AddScoped<IBasketService, BasketService>();
-
-      services.AddTransient<IFunctional, Functional>();
-
       services.AddScoped<IBasketViewModelService, BasketViewModelService>();
       services.AddScoped<IOrderService, OrderService>();
       services.AddScoped<IOrderRepository, OrderRepository>();
       services.AddScoped<CatalogViewModelService>();
-      services.Configure<CatalogSettings>(Configuration);
-      var catalogSettings = Configuration.Get<CatalogSettings>();
-      var catalogUrl = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production"
-         ? Environment.GetEnvironmentVariable("CatalogBaseUrl") : catalogSettings.CatalogBaseUrl;
-      services.AddSingleton<IUriComposer>(new UriComposer(catalogSettings));
-
-      services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
-      services.AddTransient<IEmailSender, EmailSender>();
-
-      // Add memory cache services
-      services.AddMemoryCache();
-
-      services.AddRouting(options =>
-      {
-        // Replace the type and the name used to refer to it with your own
-        // IOutboundParameterTransformer implementation
-        options.ConstraintMap["slugify"] = typeof(SlugifyParameterTransformer);
-      });
 
       services.AddMvc(options =>
           {
