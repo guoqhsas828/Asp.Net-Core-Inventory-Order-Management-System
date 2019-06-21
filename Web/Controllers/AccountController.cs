@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.eShopWeb.ApplicationCore.Interfaces;
-using Microsoft.eShopWeb.Infrastructure.Identity;
+using StoreManager.Services;
 using Microsoft.eShopWeb.Web.ViewModels.Account;
 using System;
 using System.Threading.Tasks;
@@ -21,18 +21,22 @@ namespace Microsoft.eShopWeb.Web.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IBasketService _basketService;
         private readonly IAppLogger<AccountController> _logger;
+        private readonly IFunctional _functional;
 
-        public AccountController(
-            UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager,
-            IBasketService basketService,
-            IAppLogger<AccountController> logger)
-        {
-            _userManager = userManager;
-            _signInManager = signInManager;
-            _basketService = basketService;
-            _logger = logger;
-        }
+    public AccountController(
+        UserManager<ApplicationUser> userManager,
+        SignInManager<ApplicationUser> signInManager,
+        IBasketService basketService,
+        IAppLogger<AccountController> logger,
+        IFunctional functional
+      )
+    {
+      _userManager = userManager;
+      _signInManager = signInManager;
+      _basketService = basketService;
+      _logger = logger;
+      _functional = functional;
+    }
 
         // GET: /Account/SignIn 
         [HttpGet]
@@ -162,25 +166,25 @@ namespace Microsoft.eShopWeb.Web.Controllers
             return View();
         }
 
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
+    [HttpPost]
+    [AllowAnonymous]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
+    {
+      if (ModelState.IsValid)
+      {
+        var result = await _functional.CreateUser(model.Email, model.Password, "", model.Email);
+        if (result.Succeeded)
         {
-            if (ModelState.IsValid)
-            {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await _userManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToLocal(returnUrl);
-                }
-                AddErrors(result);
-            }
-            // If we got this far, something failed, redisplay form
-            return View(model);
+          var user = await _userManager.FindByEmailAsync(model.Email);
+          await _signInManager.SignInAsync(user, isPersistent: false);
+          return RedirectToLocal(returnUrl);
         }
+        AddErrors(result);
+      }
+      // If we got this far, something failed, redisplay form
+      return View(model);
+    }
 
         [HttpGet]
         [AllowAnonymous]

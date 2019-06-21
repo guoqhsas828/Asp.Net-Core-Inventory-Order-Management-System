@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace StoreManager.Models
 {
-    public class Branch
+    public class Branch : BaseEntity
     {
-        public int BranchId { get; set; }
+        public int BranchId { get { return Id; } set { Id = value; } }
         [Required]
         public string BranchName { get; set; }
         public string Description { get; set; }

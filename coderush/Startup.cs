@@ -94,7 +94,11 @@ namespace StoreManager
       // Get Super Admin Default options
       services.Configure<SuperAdminDefaultOptions>(Configuration.GetSection("SuperAdminDefaultOptions"));
 
-      services.AddSingleton<IUriComposer>(new UriComposer(Configuration.Get<CatalogSettings>()));
+      services.Configure<CatalogSettings>(Configuration);
+      var catalogSettings = Configuration.Get<CatalogSettings>();
+      var catalogUrl = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production"
+         ? Environment.GetEnvironmentVariable("CatalogBaseUrl") : catalogSettings.CatalogBaseUrl;
+      services.AddSingleton<IUriComposer>(new UriComposer(catalogSettings));
 
       // Add email services.
       services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));

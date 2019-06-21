@@ -25,7 +25,16 @@ namespace StoreManager.Pages
             public const string ActionName = "Index";
         }
 
-        public static class Product
+    public static class CatalogBrand
+    {
+      public const string PageName = "CatalogBrand";
+      public const string RoleName = "CatalogBrand";
+      public const string Path = "/CatalogBrand/Index";
+      public const string ControllerName = "CatalogBrand";
+      public const string ActionName = "Index";
+    }
+
+    public static class Product
         {
             public const string PageName = "Product";
             public const string RoleName = "Product";

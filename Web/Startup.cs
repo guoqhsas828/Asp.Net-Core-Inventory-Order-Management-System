@@ -106,7 +106,10 @@ namespace Microsoft.eShopWeb.Web
       services.AddScoped<IOrderRepository, OrderRepository>();
       services.AddScoped<CatalogViewModelService>();
       services.Configure<CatalogSettings>(Configuration);
-      services.AddSingleton<IUriComposer>(new UriComposer(Configuration.Get<CatalogSettings>()));
+      var catalogSettings = Configuration.Get<CatalogSettings>();
+      var catalogUrl = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production"
+         ? Environment.GetEnvironmentVariable("CatalogBaseUrl") : catalogSettings.CatalogBaseUrl;
+      services.AddSingleton<IUriComposer>(new UriComposer(catalogSettings));
 
       services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
       services.AddTransient<IEmailSender, EmailSender>();
