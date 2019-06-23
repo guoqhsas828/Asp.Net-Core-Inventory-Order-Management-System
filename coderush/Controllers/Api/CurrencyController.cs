@@ -38,7 +38,7 @@ namespace StoreManager.Controllers.Api
         {
             Branch branch = new Branch();
             Currency currency = new Currency();
-            branch = await _context.Branch.SingleOrDefaultAsync(x => x.BranchId.Equals(id));
+            branch = await _context.Branch.SingleOrDefaultAsync(x => x.Id.Equals(id));
             if (branch != null && branch.CurrencyId != 0)
             {
                 currency = await _context.Currency.SingleOrDefaultAsync(x => x.CurrencyId.Equals(branch.CurrencyId));

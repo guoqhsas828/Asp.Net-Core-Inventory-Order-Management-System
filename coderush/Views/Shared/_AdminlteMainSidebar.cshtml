@@ -120,7 +120,11 @@
                     <i class="fa fa-gear"></i> <span>@MainMenu.UnitOfMeasure.PageName</span>
                 </a>
             </li>
-
+            <li class="@Html.IsSelected(controller: MainMenu.CatalogBrand.ControllerName)">
+                <a href="@MainMenu.CatalogBrand.Path">
+                    <i class="fa fa-gear"></i> <span>@MainMenu.CatalogBrand.PageName</span>
+                </a>
+            </li>
             <li class="header">CONFIG</li>
 
             <li class="@Html.IsSelected(controller: MainMenu.Currency.ControllerName)">

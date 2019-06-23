@@ -6,7 +6,7 @@ using StoreManager.Interfaces;
 
 namespace StoreManager.Models
 {
-  public class SalesOrder : BaseEntity, IAggregateRoot
+  public class SalesOrder : BaseEntityModel, IAggregateRoot
   {
     public int SalesOrderId
     {

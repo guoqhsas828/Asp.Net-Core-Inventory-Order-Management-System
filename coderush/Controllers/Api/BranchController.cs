@@ -56,7 +56,7 @@ namespace StoreManager.Controllers.Api
         public IActionResult Remove([FromBody]CrudViewModel<Branch> payload)
         {
             Branch branch = _context.Branch
-                .Where(x => x.BranchId == (int)payload.key)
+                .Where(x => x.Id == (int)payload.key)
                 .FirstOrDefault();
             _context.Branch.Remove(branch);
             _context.SaveChanges();

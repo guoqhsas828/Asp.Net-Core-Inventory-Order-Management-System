@@ -2,7 +2,7 @@
 
 namespace Microsoft.eShopWeb.ApplicationCore.Entities.BuyerAggregate
 {
-    public class PaymentMethod : BaseEntity
+    public class PaymentMethod : BaseEntityModel
     {
         public string Alias { get; set; }
         public string CardId { get; set; } // actual card data must be stored in a PCI compliant system, like Stripe

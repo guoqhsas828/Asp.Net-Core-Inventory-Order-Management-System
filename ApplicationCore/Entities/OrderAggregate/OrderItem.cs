@@ -3,7 +3,7 @@
 namespace Microsoft.eShopWeb.ApplicationCore.Entities.OrderAggregate
 {
 
-    public class OrderItem : BaseEntity
+    public class OrderItem : BaseEntityModel
     {
       public int OrderItemId
       {

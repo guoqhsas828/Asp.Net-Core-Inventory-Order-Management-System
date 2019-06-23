@@ -52,7 +52,7 @@ namespace StoreManager.Services
         var itemOrdered = catalogItem;
         var orderItem = new SalesOrderLine { Product = itemOrdered,
           Price = Convert.ToDouble(item.UnitPrice), Quantity = Convert.ToDouble(item.Quantity),
-          ProductId = itemOrdered.ProductId, Amount = item.Quantity };
+          ProductId = itemOrdered.Id, Amount = item.Quantity };
         orderItem.Total = orderItem.SubTotal = orderItem.Price * orderItem.Quantity;
         if (orderItem.Product != null) ccy = orderItem.Product.CurrencyId;
         items.Add(orderItem);
@@ -73,14 +73,14 @@ namespace StoreManager.Services
       order.SubTotal = order.Total;
 
       if (customer != null)
-        order.CustomerId = customer.CustomerId;
+        order.CustomerId = customer.Id;
 
       if (ccy.HasValue)
         order.CurrencyId = ccy.Value;
 
       if (contacts.Any())
       {
-        order.BranchId = contacts.First().BranchId;
+        order.BranchId = contacts.First().Id;
       }
       await _orderRepository.AddAsync(order);
 
@@ -92,10 +92,10 @@ namespace StoreManager.Services
 
     public async Task SendSmsMessage(SalesOrder order, Branch branch, string phoneNumber)
     {
-      string msgText = $"SalesOrder# {order.SalesOrderId} from {order.SalesOrderName}: " + Environment.NewLine;
+      string msgText = $"SalesOrder# {order.Id} from {order.SalesOrderName}: " + Environment.NewLine;
       foreach (var orderItem in order.SalesOrderLines)
       {
-        if (orderItem.Product.BranchId != branch.BranchId)
+        if (orderItem.Product.BranchId != branch.Id)
           continue;
 
         msgText += $"{orderItem.Quantity} {orderItem.Product.ProductName} " + Environment.NewLine;

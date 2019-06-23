@@ -53,7 +53,7 @@ namespace StoreManager.Controllers.Api
                 }
 
                 salesOrders = await _context.SalesOrder
-                    .Where(x => !ids.Contains(x.SalesOrderId))
+                    .Where(x => !ids.Contains(x.Id))
                     .ToListAsync();
             }
             catch (Exception)
@@ -68,7 +68,7 @@ namespace StoreManager.Controllers.Api
         public async Task<IActionResult> GetById(int id)
         {
             SalesOrder result = await _context.SalesOrder
-                .Where(x => x.SalesOrderId.Equals(id))
+                .Where(x => x.Id.Equals(id))
                 .Include(x => x.SalesOrderLines)
                 .FirstOrDefaultAsync();
 
@@ -81,7 +81,7 @@ namespace StoreManager.Controllers.Api
             {
                 SalesOrder salesOrder = new SalesOrder();
                 salesOrder = _context.SalesOrder
-                    .Where(x => x.SalesOrderId.Equals(salesOrderId))
+                    .Where(x => x.Id.Equals(salesOrderId))
                     .FirstOrDefault();
 
                 if (salesOrder != null)
@@ -117,7 +117,7 @@ namespace StoreManager.Controllers.Api
             salesOrder.SalesOrderName = _numberSequence.GetNumberSequence("SO");
             _context.SalesOrder.Add(salesOrder);
             _context.SaveChanges();
-            this.UpdateSalesOrder(salesOrder.SalesOrderId);
+            this.UpdateSalesOrder(salesOrder.Id);
             return Ok(salesOrder);
         }
 
@@ -134,7 +134,7 @@ namespace StoreManager.Controllers.Api
         public IActionResult Remove([FromBody]CrudViewModel<SalesOrder> payload)
         {
             SalesOrder salesOrder = _context.SalesOrder
-                .Where(x => x.SalesOrderId == (int)payload.key)
+                .Where(x => x.Id.Equals(payload.key))
                 .FirstOrDefault();
             _context.SalesOrder.Remove(salesOrder);
             _context.SaveChanges();

@@ -7,7 +7,7 @@ using StoreManager.Models;
 
 namespace Microsoft.eShopWeb.ApplicationCore.Entities.OrderAggregate
 {
-  public class Order : BaseEntity, IAggregateRoot
+  public class Order : BaseEntityModel, IAggregateRoot
   {
     private Order()
     {

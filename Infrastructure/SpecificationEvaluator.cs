@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace StoreManager.Data
 {
-    public class SpecificationEvaluator<T> where T : BaseEntity
+    public class SpecificationEvaluator<T> where T : BaseEntityModel
     {
         public static IQueryable<T> GetQuery(IQueryable<T> inputQuery, ISpecification<T> specification)
         {

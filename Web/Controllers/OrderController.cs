@@ -39,7 +39,7 @@ namespace Microsoft.eShopWeb.Web.Controllers
             {
               Discount = 0,
               PictureUrl = _uriComposer.ComposePicUri(oi.Product.ProductImageUrl),
-              ProductId = oi.Product.ProductId,
+              ProductId = oi.Product.Id,
               ProductName = oi.Product.ProductName,
               UnitPrice = Convert.ToDecimal(oi.Price),
               Units = Convert.ToInt32(oi.Quantity)
@@ -71,7 +71,7 @@ namespace Microsoft.eShopWeb.Web.Controllers
         {
           Discount = 0,
           PictureUrl = _uriComposer.ComposePicUri(oi.Product.ProductImageUrl),
-          ProductId = oi.Product.ProductId,
+          ProductId = oi.Product.Id,
           ProductName = oi.Product.ProductName,
           UnitPrice = Convert.ToDecimal(oi.Price),
           Units = Convert.ToInt32(oi.Quantity)

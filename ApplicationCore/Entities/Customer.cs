@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StoreManager.Models
 {
-  public class Customer : BaseEntity
+  public class Customer : BaseEntityModel
   {
     public Customer()
     {

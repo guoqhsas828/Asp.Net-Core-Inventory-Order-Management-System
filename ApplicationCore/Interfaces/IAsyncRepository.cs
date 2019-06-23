@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace StoreManager.Interfaces
 {
-    public interface IAsyncRepository<T> where T : BaseEntity
+    public interface IAsyncRepository<T> where T : BaseEntityModel
     {
         Task<T> GetByIdAsync(int id);
         Task<IReadOnlyList<T>> ListAllAsync();

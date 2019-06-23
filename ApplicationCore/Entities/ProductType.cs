@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StoreManager.Models
 {
-  public class ProductType : BaseEntity
+  public class ProductType : BaseEntityModel
   {
     public int ProductTypeId
     {

@@ -26,7 +26,7 @@ namespace StoreManager.Controllers
 
         public IActionResult Detail(int id)
         {
-            SalesOrder salesOrder = _context.SalesOrder.SingleOrDefault(x => x.SalesOrderId.Equals(id));
+            SalesOrder salesOrder = _context.SalesOrder.SingleOrDefault(x => x.Id.Equals(id));
 
             if (salesOrder == null)
             {

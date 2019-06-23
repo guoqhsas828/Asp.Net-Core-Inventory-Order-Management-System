@@ -28,10 +28,10 @@
                     <div class="row">
                         <dl class="dl-horizontal">
                             <dt>
-                                @Html.DisplayNameFor(model => model.SalesOrderId)
+                                @Html.DisplayNameFor(model => model.Id)
                             </dt>
                             <dd>
-                                @Html.DisplayFor(model => model.SalesOrderId)
+                                @Html.DisplayFor(model => model.Id)
                             </dd>
                             <dt>
                                 @Html.DisplayNameFor(model => model.SalesOrderName)
@@ -169,7 +169,7 @@
             var dataManager = ej.DataManager({
                 url: "/api/SalesOrderLine",
                 adaptor: new ej.WebApiAdaptor(),
-                headers: [{ "SalesOrderId": @Model.SalesOrderId}],
+                headers: [{ "SalesOrderId": @Model.Id}],
                 offline: true
             });
 
@@ -254,7 +254,7 @@
                 allowPaging: true,
                 columns: [
                     { field: "SalesOrderLineId", headerText: 'Line Id', isPrimaryKey: true, isIdentity: true, visible: false },
-                    { field: "SalesOrderId", headerText: 'SO#', defaultValue: @Model.SalesOrderId, foreignKeyField: "SalesOrderId", foreignKeyValue: "SalesOrderName", dataSource: dataManagerSalesOrder, visible: false },
+                    { field: "SalesOrderId", headerText: 'SO#', defaultValue: @Model.Id, foreignKeyField: "SalesOrderId", foreignKeyValue: "SalesOrderName", dataSource: dataManagerSalesOrder, visible: false },
                     { field: "ProductId", headerText: 'Product', foreignKeyField: "ProductId", foreignKeyValue: "ProductName", dataSource: dataManagerProduct },
                     { field: "Description", headerText: 'Description' },
                     { field: "Quantity", headerText: 'Qty', defaultValue: 1, editType: "numericedit", format: "{0:n2}" },

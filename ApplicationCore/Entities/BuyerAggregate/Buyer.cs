@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Microsoft.eShopWeb.ApplicationCore.Entities.BuyerAggregate
 {
-    public class Buyer : BaseEntity, IAggregateRoot
+    public class Buyer : BaseEntityModel, IAggregateRoot
     {
         public string IdentityGuid { get; private set; }
 

@@ -1,6 +1,6 @@
 ﻿namespace StoreManager.Models
 {
-  public class CatalogBrand : BaseEntity
+  public class CatalogBrand : BaseEntityModel
   {
     public int CatalogBrandId
     {

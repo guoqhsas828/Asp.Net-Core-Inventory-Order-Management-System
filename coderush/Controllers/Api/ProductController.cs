@@ -57,7 +57,7 @@ namespace StoreManager.Controllers.Api
         public IActionResult Remove([FromBody]CrudViewModel<Product> payload)
         {
             Product product = _context.Product
-                .Where(x => x.ProductId == (int)payload.key)
+                .Where(x => x.Id.Equals(payload.key))
                 .FirstOrDefault();
             _context.Product.Remove(product);
             _context.SaveChanges();

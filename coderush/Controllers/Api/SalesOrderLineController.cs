@@ -104,7 +104,7 @@ namespace StoreManager.Controllers.Api
             {
                 SalesOrder salesOrder = new SalesOrder();
                 salesOrder = _context.SalesOrder
-                    .Where(x => x.SalesOrderId.Equals(salesOrderId))
+                    .Where(x => x.Id.Equals(salesOrderId))
                     .FirstOrDefault();
 
                 if (salesOrder != null)
