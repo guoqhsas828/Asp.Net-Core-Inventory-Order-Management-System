@@ -57,7 +57,7 @@ namespace StoreManager.Controllers.Api
         public IActionResult Remove([FromBody]CrudViewModel<CatalogBrand> payload)
         {
             var val = _context.CatalogBrands
-                .Where(x => x.CatalogBrandId == (int)payload.key)
+                .Where(x => x.Id == (int)payload.key)
                 .FirstOrDefault();
             _context.CatalogBrands.Remove(val);
             _context.SaveChanges();
