@@ -147,7 +147,7 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CatalogBrands",
+                name: "CatalogBrand",
                 columns: table => new
                 {
                     CatalogBrandId = table.Column<int>(nullable: false)
@@ -157,7 +157,7 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CatalogBrands", x => x.CatalogBrandId);
+                    table.PrimaryKey("PK_CatalogBrand", x => x.CatalogBrandId);
                 });
 
             migrationBuilder.CreateTable(
@@ -733,9 +733,9 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_CatalogItems", x => x.CatalogItemId);
                     table.ForeignKey(
-                        name: "FK_CatalogItems_CatalogBrands_CatalogBrandId",
+                        name: "FK_CatalogItems_CatalogBrand_CatalogBrandId",
                         column: x => x.CatalogBrandId,
-                        principalTable: "CatalogBrands",
+                        principalTable: "CatalogBrand",
                         principalColumn: "CatalogBrandId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -769,9 +769,9 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Product", x => x.ProductId);
                     table.ForeignKey(
-                        name: "FK_Product_CatalogBrands_CatalogBrandId",
+                        name: "FK_Product_CatalogBrand_CatalogBrandId",
                         column: x => x.CatalogBrandId,
-                        principalTable: "CatalogBrands",
+                        principalTable: "CatalogBrand",
                         principalColumn: "CatalogBrandId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -1103,7 +1103,7 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
                 name: "Address");
 
             migrationBuilder.DropTable(
-                name: "CatalogBrands");
+                name: "CatalogBrand");
 
             migrationBuilder.DropTable(
                 name: "ProductType");

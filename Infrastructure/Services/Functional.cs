@@ -99,9 +99,9 @@ namespace StoreManager.Services
           await _context.SaveChangesAsync();
         }
 
-        if (!_context.CatalogBrands.Any())
+        if (!_context.CatalogBrand.Any())
         {
-          _context.CatalogBrands.AddRange(
+          _context.CatalogBrand.AddRange(
             GetPreconfiguredCatalogBrands());
 
           await _context.SaveChangesAsync();

@@ -18,7 +18,6 @@ namespace Microsoft.eShopWeb.Infrastructure.Data
     protected override void OnModelCreating(ModelBuilder builder)
     {
       builder.Entity<Basket>(ConfigureBasket);
-      builder.Entity<CatalogBrand>(ConfigureCatalogBrand);
       builder.Entity<Address>(ConfigureAddress);
       builder.Entity<BasketItem>(ConfigureBasketItem);
       //builder.Entity<Product>(ConfigurateCatalogProduct);
@@ -67,19 +66,5 @@ namespace Microsoft.eShopWeb.Infrastructure.Data
       navigation.SetPropertyAccessMode(PropertyAccessMode.Field);
     }
 
-    private void ConfigureCatalogBrand(EntityTypeBuilder<CatalogBrand> builder)
-    {
-      builder.ToTable("CatalogBrand");
-
-      builder.HasKey(ci => ci.Id);
-
-      builder.Property(ci => ci.Id)
-        .ForSqlServerUseSequenceHiLo("catalog_brand_hilo")
-        .IsRequired();
-
-      builder.Property(cb => cb.Brand)
-        .IsRequired()
-        .HasMaxLength(100);
-    }
   }
 }

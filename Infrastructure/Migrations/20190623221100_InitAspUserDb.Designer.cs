@@ -10,7 +10,7 @@ using StoreManager.Data;
 namespace Microsoft.eShopWeb.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190623153719_InitAspUserDb")]
+    [Migration("20190623221100_InitAspUserDb")]
     partial class InitAspUserDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -438,7 +438,7 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
 
                     b.HasKey("CatalogBrandId");
 
-                    b.ToTable("CatalogBrands");
+                    b.ToTable("CatalogBrand");
                 });
 
             modelBuilder.Entity("StoreManager.Models.Currency", b =>

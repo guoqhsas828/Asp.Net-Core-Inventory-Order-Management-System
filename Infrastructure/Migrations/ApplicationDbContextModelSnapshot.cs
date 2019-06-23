@@ -436,7 +436,7 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
 
                     b.HasKey("CatalogBrandId");
 
-                    b.ToTable("CatalogBrands");
+                    b.ToTable("CatalogBrand");
                 });
 
             modelBuilder.Entity("StoreManager.Models.Currency", b =>

@@ -28,7 +28,7 @@ namespace StoreManager.Controllers.Api
     [HttpGet]
         public async Task<IActionResult> GetCatalogBrand()
         {
-            List<CatalogBrand> Items = await _context.CatalogBrands.ToListAsync();
+            List<CatalogBrand> Items = await _context.CatalogBrand.ToListAsync();
             int Count = Items.Count();
             return Ok(new { Items, Count });
         }
@@ -39,7 +39,7 @@ namespace StoreManager.Controllers.Api
         public IActionResult Insert([FromBody]CrudViewModel<CatalogBrand> payload)
         {
             var val = payload.value;
-            _context.CatalogBrands.Add(val);
+            _context.CatalogBrand.Add(val);
             _context.SaveChanges();
             return Ok(val);
         }
@@ -48,7 +48,7 @@ namespace StoreManager.Controllers.Api
         public IActionResult Update([FromBody]CrudViewModel<CatalogBrand> payload)
         {
             var val = payload.value;
-            _context.CatalogBrands.Update(val);
+            _context.CatalogBrand.Update(val);
             _context.SaveChanges();
             return Ok(val);
         }
@@ -56,10 +56,10 @@ namespace StoreManager.Controllers.Api
         [HttpPost("[action]")]
         public IActionResult Remove([FromBody]CrudViewModel<CatalogBrand> payload)
         {
-            var val = _context.CatalogBrands
+            var val = _context.CatalogBrand
                 .Where(x => x.Id == (int)payload.key)
                 .FirstOrDefault();
-            _context.CatalogBrands.Remove(val);
+            _context.CatalogBrand.Remove(val);
             _context.SaveChanges();
             return Ok(val);
 

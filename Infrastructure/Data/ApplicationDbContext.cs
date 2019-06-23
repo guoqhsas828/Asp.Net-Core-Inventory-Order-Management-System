@@ -84,7 +84,7 @@ namespace StoreManager.Data
 
     public DbSet<StoreManager.Models.UserProfile> UserProfile { get; set; }
 
-    public DbSet<CatalogBrand> CatalogBrands { get; set; }
+    public DbSet<StoreManager.Models.CatalogBrand> CatalogBrand { get; set; }
     public DbSet<StoreManager.Models.Product> Product { get; set; }
 
 
@@ -95,5 +95,21 @@ namespace StoreManager.Data
     public DbSet<CatalogType> CatalogTypes { get; set; }
     public DbSet<Order> Orders { get; set; }
     public DbSet<OrderItem> OrderItems { get; set; }
+
+    //private void ConfigureCatalogBrand(EntityTypeBuilder<CatalogBrand> builder)
+    //{
+    //  builder.ToTable("CatalogBrand");
+
+    //  builder.HasKey(ci => ci.Id);
+
+    //  builder.Property(ci => ci.Id)
+    //    .ForSqlServerUseSequenceHiLo("catalog_brand_hilo")
+    //    .IsRequired();
+
+    //  builder.Property(cb => cb.Brand)
+    //    .IsRequired()
+    //    .HasMaxLength(100);
+    //}
+
   }
 }
