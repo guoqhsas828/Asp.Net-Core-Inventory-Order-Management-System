@@ -70,7 +70,7 @@ namespace Microsoft.eShopWeb.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Index(IndexViewModel model)
+        public async Task<IActionResult> MyAccount(IndexViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -104,7 +104,7 @@ namespace Microsoft.eShopWeb.Web.Controllers
             }
 
             StatusMessage = "Your profile has been updated";
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(MyAccount));
         }
 
         [HttpPost]
@@ -128,7 +128,7 @@ namespace Microsoft.eShopWeb.Web.Controllers
             await _emailSender.SendEmailConfirmationAsync(email, callbackUrl);
 
             StatusMessage = "Verification email sent. Please check your email.";
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(MyAccount));
         }
 
         [HttpGet]

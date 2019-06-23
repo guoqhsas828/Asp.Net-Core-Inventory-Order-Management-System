@@ -65,7 +65,7 @@ namespace StoreManager.Services
       public async Task SendSmsMessage(string msgText, string phoneNumber)
       {
         var accountSid = _smtpOptions.AcctSid;
-        var authToken = _smtpOptions.AccToken;
+        var authToken = _smtpOptions.AcctToken;
         var toPhoneNumber = phoneNumber.StartsWith("+") ? phoneNumber : (phoneNumber.Length ==10 ? "+1" : "+") + phoneNumber;
         TwilioClient.Init(accountSid, authToken);
 
