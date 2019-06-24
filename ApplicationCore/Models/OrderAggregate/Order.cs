@@ -1,5 +1,4 @@
-﻿using Microsoft.eShopWeb.ApplicationCore.Interfaces;
-using Ardalis.GuardClauses;
+﻿using Ardalis.GuardClauses;
 using System;
 using System.Collections.Generic;
 using StoreManager.Interfaces;
