@@ -19,7 +19,7 @@ namespace StoreManager.Data
       try
       {
         // TODO: Only run this if using a real database
-        //catalogContext.Database.Migrate();
+        catalogContext.Database.Migrate();
 
       }
       catch (Exception ex)
