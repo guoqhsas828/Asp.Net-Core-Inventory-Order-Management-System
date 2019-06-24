@@ -4,11 +4,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using StoreManager;
 using StoreManager.Services;
-using Microsoft.eShopWeb.Web.ViewModels.Account;
 using System;
 using System.Threading.Tasks;
 using StoreManager.Interfaces;
 using StoreManager.Models;
+using StoreManager.Models.AccountViewModels;
 
 namespace Microsoft.eShopWeb.Web.Controllers
 {

@@ -110,7 +110,7 @@ namespace StoreManager.Controllers.Api
             var userProfile = _context.UserProfile.SingleOrDefault(x => x.UserProfileId.Equals((int)payload.key));
             if (userProfile != null)
             {
-                var user = _context.Users.Where(x => x.Id.Equals(userProfile.ApplicationUserId)).FirstOrDefault();
+                var user = await _userManager.FindByIdAsync(userProfile.ApplicationUserId);
                 var result = await _userManager.DeleteAsync(user);
                 if (result.Succeeded)
                 {
