@@ -88,13 +88,6 @@ namespace StoreManager.Data
     public DbSet<StoreManager.Models.Product> Product { get; set; }
 
 
-    public DbSet<Basket> Baskets { get; set; }
-
-    public DbSet<BasketItem> BasketItems { get; set; }
-    public DbSet<CatalogItem> CatalogItems { get; set; }
-    public DbSet<CatalogType> CatalogTypes { get; set; }
-    public DbSet<Order> Orders { get; set; }
-    public DbSet<OrderItem> OrderItems { get; set; }
 
     //private void ConfigureCatalogBrand(EntityTypeBuilder<CatalogBrand> builder)
     //{

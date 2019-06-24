@@ -10,7 +10,7 @@ namespace StoreManager.Models
       State = "NJ";
       Country = "US";
       ZipCode = "07901";
-      Street = "582 Springfield Ave";
+      Street = "";
     }
 
     public int AddressId { get; set; }

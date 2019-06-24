@@ -3,7 +3,7 @@ using StoreManager.Models;
 
 namespace Microsoft.eShopWeb.ApplicationCore.Entities
 {
-    public class CatalogItem : BaseEntityModel
+    public class CatalogItem : CatalogEntityModel
     {
       public int CatalogItemId
       {

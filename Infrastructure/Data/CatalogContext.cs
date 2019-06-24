@@ -17,18 +17,18 @@ namespace Microsoft.eShopWeb.Infrastructure.Data
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
-      builder.Entity<Basket>(ConfigureBasket);
-      builder.Entity<Address>(ConfigureAddress);
-      builder.Entity<BasketItem>(ConfigureBasketItem);
+      //builder.Entity<Basket>(ConfigureBasket);
+      //builder.Entity<Address>(ConfigureAddress);
+      //builder.Entity<BasketItem>(ConfigureBasketItem);
       //builder.Entity<Product>(ConfigurateCatalogProduct);
     }
 
-    private void ConfigureBasketItem(EntityTypeBuilder<BasketItem> builder)
-    {
-      builder.Property(bi => bi.UnitPrice)
-        .IsRequired(true)
-        .HasColumnType("decimal(18,2)");
-    }
+    //private void ConfigureBasketItem(EntityTypeBuilder<BasketItem> builder)
+    //{
+    //  builder.Property(bi => bi.UnitPrice)
+    //    .IsRequired(true)
+    //    .HasColumnType("decimal(18,2)");
+    //}
 
     //private void ConfigurateCatalogProduct(EntityTypeBuilder<Product> builder)
     //{
@@ -37,34 +37,43 @@ namespace Microsoft.eShopWeb.Infrastructure.Data
     //      .IsRequired();
     //}
 
-    private void ConfigureAddress(EntityTypeBuilder<Address> builder)
-    {
-      builder.Property(a => a.ZipCode)
-        .HasMaxLength(18)
-        .IsRequired();
+    //private void ConfigureAddress(EntityTypeBuilder<Address> builder)
+    //{
+    //  builder.Property(a => a.ZipCode)
+    //    .HasMaxLength(18)
+    //    .IsRequired();
 
-      builder.Property(a => a.Street)
-        .HasMaxLength(180)
-        .IsRequired();
+    //  builder.Property(a => a.Street)
+    //    .HasMaxLength(180)
+    //    .IsRequired();
 
-      builder.Property(a => a.State)
-        .HasMaxLength(60);
+    //  builder.Property(a => a.State)
+    //    .HasMaxLength(60);
 
-      builder.Property(a => a.Country)
-        .HasMaxLength(90)
-        .IsRequired();
+    //  builder.Property(a => a.Country)
+    //    .HasMaxLength(90)
+    //    .IsRequired();
 
-      builder.Property(a => a.City)
-        .HasMaxLength(100)
-        .IsRequired();
-    }
+    //  builder.Property(a => a.City)
+    //    .HasMaxLength(100)
+    //    .IsRequired();
+    //}
 
-    private void ConfigureBasket(EntityTypeBuilder<Basket> builder)
-    {
-      var navigation = builder.Metadata.FindNavigation(nameof(Basket.Items));
+    //private void ConfigureBasket(EntityTypeBuilder<Basket> builder)
+    //{
+    //  var navigation = builder.Metadata.FindNavigation(nameof(Basket.Items));
 
-      navigation.SetPropertyAccessMode(PropertyAccessMode.Field);
-    }
+    //  navigation.SetPropertyAccessMode(PropertyAccessMode.Field);
+    //}
+
+    public DbSet<BasketItem> BasketItems { get; set; }
+    public DbSet<Basket> Baskets { get; set; }
+
+    //public DbSet<Order> Orders { get; set; }
+    //public DbSet<OrderItem> OrderItems { get; set; }
+    //public DbSet<CatalogItem> CatalogItems { get; set; }
+
+    //public DbSet<CatalogType> CatalogTypes { get; set; }
 
   }
 }

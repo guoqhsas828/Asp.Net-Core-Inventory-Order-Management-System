@@ -3,20 +3,20 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using StoreManager.Models;
 using System.Linq;
-//using Ardalis.GuardClauses;
+using Ardalis.GuardClauses;
 using StoreManager.Specifications;
 
 namespace StoreManager.Services
 {
     public class BasketService : IBasketService
     {
-        private readonly IAsyncRepository<Basket> _basketRepository;
-        private readonly IAsyncRepository<BasketItem> _basketItemRepository;
+        private readonly ICatalogRepository<Basket> _basketRepository;
+        private readonly ICatalogRepository<BasketItem> _basketItemRepository;
         private readonly IAppLogger<BasketService> _logger;
 
-        public BasketService(IAsyncRepository<Basket> basketRepository,
+        public BasketService(ICatalogRepository<Basket> basketRepository,
             IAppLogger<BasketService> logger,
-            IAsyncRepository<BasketItem> basketItemRepository)
+            ICatalogRepository<BasketItem> basketItemRepository)
         {
             _basketRepository = basketRepository;
             _logger = logger;
@@ -46,7 +46,7 @@ namespace StoreManager.Services
 
         public async Task<int> GetBasketItemCountAsync(string userName)
         {
-            //Guard.Against.NullOrEmpty(userName, nameof(userName));
+            Guard.Against.NullOrEmpty(userName, nameof(userName));
             var basketSpec = new BasketWithItemsSpecification(userName);
             var basket = (await _basketRepository.ListAsync(basketSpec)).FirstOrDefault();
             if (basket == null)
@@ -61,9 +61,9 @@ namespace StoreManager.Services
 
         public async Task SetQuantities(int basketId, Dictionary<string, int> quantities)
         {
-            //Guard.Against.Null(quantities, nameof(quantities));
+            Guard.Against.Null(quantities, nameof(quantities));
             var basket = await _basketRepository.GetByIdAsync(basketId);
-            //Guard.Against.NullBasket(basketId, basket);
+            Guard.Against.NullBasket(basketId, basket);
             foreach (var item in basket.Items)
             {
                 if (quantities.TryGetValue(item.Id.ToString(), out var quantity))
@@ -77,8 +77,8 @@ namespace StoreManager.Services
 
         public async Task TransferBasketAsync(string anonymousId, string userName)
         {
-            //Guard.Against.NullOrEmpty(anonymousId, nameof(anonymousId));
-            //Guard.Against.NullOrEmpty(userName, nameof(userName));
+            Guard.Against.NullOrEmpty(anonymousId, nameof(anonymousId));
+            Guard.Against.NullOrEmpty(userName, nameof(userName));
             var basketSpec = new BasketWithItemsSpecification(anonymousId);
             var basket = (await _basketRepository.ListAsync(basketSpec)).FirstOrDefault();
             if (basket == null) return;

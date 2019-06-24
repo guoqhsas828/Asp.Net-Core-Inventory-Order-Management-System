@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using Microsoft.eShopWeb.Infrastructure.Services;
 using Microsoft.eShopWeb.Infrastructure.Data;
 using Microsoft.eShopWeb.Web;
 using Microsoft.EntityFrameworkCore;
@@ -72,6 +72,7 @@ namespace Microsoft.eShopWeb.Infrastructure.Extensions
       services.AddTransient<IFunctional, Functional>();
 
       services.AddScoped(typeof(IAsyncRepository<>), typeof(EfRepository<>));
+      services.AddScoped(typeof(ICatalogRepository<>), typeof(CatalogRepository<>));
       services.AddTransient<IRoles, Roles>();
       services.AddScoped<IBasketService, BasketService>();
 

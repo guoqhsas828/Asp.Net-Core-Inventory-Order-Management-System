@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace StoreManager.Models
 {
-  public class Basket : BaseEntityModel, IAggregateRoot
+  public class Basket : CatalogEntityModel, IAggregateRoot
   {
     public int BasketId { get { return Id; } set { Id = value; } }
     public string BuyerId { get; set; }

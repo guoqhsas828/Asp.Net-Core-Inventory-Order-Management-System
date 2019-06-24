@@ -15,13 +15,13 @@ namespace StoreManager.Services
   public class OrderService : IOrderService
   {
     private readonly IAsyncRepository<SalesOrder> _orderRepository;
-    private readonly IAsyncRepository<Basket> _basketRepository;
+    private readonly ICatalogRepository<Basket> _basketRepository;
     private readonly IAsyncRepository<Product> _itemRepository;
     private readonly IAsyncRepository<Customer> _customerRepository;
     private readonly IAsyncRepository<Branch> _branchRepository;
     private readonly IEmailSender _emailSender;
 
-    public OrderService(IAsyncRepository<Basket> basketRepository,
+    public OrderService(ICatalogRepository<Basket> basketRepository,
         IAsyncRepository<Product> itemRepository,
         IAsyncRepository<SalesOrder> orderRepository,
       IAsyncRepository<Customer> customerRepo,
@@ -73,7 +73,10 @@ namespace StoreManager.Services
       order.SubTotal = order.Total;
 
       if (customer != null)
+      {
         order.CustomerId = customer.Id;
+        //order.
+      }
 
       if (ccy.HasValue)
         order.CurrencyId = ccy.Value;

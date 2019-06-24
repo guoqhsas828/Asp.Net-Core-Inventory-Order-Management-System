@@ -9,23 +9,6 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Address",
-                columns: table => new
-                {
-                    AddressId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Street = table.Column<string>(nullable: true),
-                    City = table.Column<string>(nullable: true),
-                    State = table.Column<string>(nullable: true),
-                    Country = table.Column<string>(nullable: true),
-                    ZipCode = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Address", x => x.AddressId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
                 {
@@ -62,19 +45,6 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Baskets",
-                columns: table => new
-                {
-                    BasketId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    BuyerId = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Baskets", x => x.BasketId);
                 });
 
             migrationBuilder.CreateTable(
@@ -158,34 +128,6 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CatalogBrand", x => x.CatalogBrandId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CatalogItemOrdered",
-                columns: table => new
-                {
-                    CatalogItemOrderedId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CatalogItemId = table.Column<int>(nullable: false),
-                    ProductName = table.Column<string>(nullable: true),
-                    PictureUri = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CatalogItemOrdered", x => x.CatalogItemOrderedId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CatalogTypes",
-                columns: table => new
-                {
-                    CatalogTypeId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Type = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CatalogTypes", x => x.CatalogTypeId);
                 });
 
             migrationBuilder.CreateTable(
@@ -567,28 +509,6 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Orders",
-                columns: table => new
-                {
-                    OrderId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    BuyerId = table.Column<string>(nullable: true),
-                    OrderDate = table.Column<DateTimeOffset>(nullable: false),
-                    ShipToAddressAddressId = table.Column<int>(nullable: true),
-                    Notes = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Orders", x => x.OrderId);
-                    table.ForeignKey(
-                        name: "FK_Orders_Address_ShipToAddressAddressId",
-                        column: x => x.ShipToAddressAddressId,
-                        principalTable: "Address",
-                        principalColumn: "AddressId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -695,58 +615,6 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "BasketItems",
-                columns: table => new
-                {
-                    BasketItemId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    UnitPrice = table.Column<decimal>(nullable: false),
-                    Quantity = table.Column<int>(nullable: false),
-                    CatalogItemId = table.Column<int>(nullable: false),
-                    BasketId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BasketItems", x => x.BasketItemId);
-                    table.ForeignKey(
-                        name: "FK_BasketItems_Baskets_BasketId",
-                        column: x => x.BasketId,
-                        principalTable: "Baskets",
-                        principalColumn: "BasketId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CatalogItems",
-                columns: table => new
-                {
-                    CatalogItemId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
-                    Price = table.Column<decimal>(nullable: false),
-                    PictureUri = table.Column<string>(nullable: true),
-                    CatalogTypeId = table.Column<int>(nullable: false),
-                    CatalogBrandId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CatalogItems", x => x.CatalogItemId);
-                    table.ForeignKey(
-                        name: "FK_CatalogItems_CatalogBrand_CatalogBrandId",
-                        column: x => x.CatalogBrandId,
-                        principalTable: "CatalogBrand",
-                        principalColumn: "CatalogBrandId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CatalogItems_CatalogTypes_CatalogTypeId",
-                        column: x => x.CatalogTypeId,
-                        principalTable: "CatalogTypes",
-                        principalColumn: "CatalogTypeId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Product",
                 columns: table => new
                 {
@@ -810,34 +678,6 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
                         principalTable: "PurchaseOrder",
                         principalColumn: "PurchaseOrderId",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "OrderItems",
-                columns: table => new
-                {
-                    OrderItemId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ItemOrderedCatalogItemOrderedId = table.Column<int>(nullable: true),
-                    UnitPrice = table.Column<decimal>(nullable: false),
-                    Units = table.Column<int>(nullable: false),
-                    OrderId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_OrderItems", x => x.OrderItemId);
-                    table.ForeignKey(
-                        name: "FK_OrderItems_CatalogItemOrdered_ItemOrderedCatalogItemOrderedId",
-                        column: x => x.ItemOrderedCatalogItemOrderedId,
-                        principalTable: "CatalogItemOrdered",
-                        principalColumn: "CatalogItemOrderedId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_OrderItems_Orders_OrderId",
-                        column: x => x.OrderId,
-                        principalTable: "Orders",
-                        principalColumn: "OrderId",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -916,36 +756,6 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BasketItems_BasketId",
-                table: "BasketItems",
-                column: "BasketId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CatalogItems_CatalogBrandId",
-                table: "CatalogItems",
-                column: "CatalogBrandId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CatalogItems_CatalogTypeId",
-                table: "CatalogItems",
-                column: "CatalogTypeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_OrderItems_ItemOrderedCatalogItemOrderedId",
-                table: "OrderItems",
-                column: "ItemOrderedCatalogItemOrderedId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_OrderItems_OrderId",
-                table: "OrderItems",
-                column: "OrderId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Orders_ShipToAddressAddressId",
-                table: "Orders",
-                column: "ShipToAddressAddressId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Product_CatalogBrandId",
                 table: "Product",
                 column: "CatalogBrandId");
@@ -989,9 +799,6 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "BasketItems");
-
-            migrationBuilder.DropTable(
                 name: "Bill");
 
             migrationBuilder.DropTable(
@@ -1002,9 +809,6 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "CashBank");
-
-            migrationBuilder.DropTable(
-                name: "CatalogItems");
 
             migrationBuilder.DropTable(
                 name: "Currency");
@@ -1026,9 +830,6 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "NumberSequence");
-
-            migrationBuilder.DropTable(
-                name: "OrderItems");
 
             migrationBuilder.DropTable(
                 name: "PaymentReceive");
@@ -1079,18 +880,6 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Baskets");
-
-            migrationBuilder.DropTable(
-                name: "CatalogTypes");
-
-            migrationBuilder.DropTable(
-                name: "CatalogItemOrdered");
-
-            migrationBuilder.DropTable(
-                name: "Orders");
-
-            migrationBuilder.DropTable(
                 name: "PurchaseOrder");
 
             migrationBuilder.DropTable(
@@ -1098,9 +887,6 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "SalesOrder");
-
-            migrationBuilder.DropTable(
-                name: "Address");
 
             migrationBuilder.DropTable(
                 name: "CatalogBrand");

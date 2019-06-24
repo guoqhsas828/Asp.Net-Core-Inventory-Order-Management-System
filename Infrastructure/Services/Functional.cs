@@ -70,26 +70,46 @@ namespace StoreManager.Services
         await _context.CashBank.AddAsync(new CashBank {CashBankName = "Default"});
         await _context.SaveChangesAsync();
 
-        await _context.Currency.AddAsync(new Currency {CurrencyName = "Default", CurrencyCode = "USD"});
-        await _context.SaveChangesAsync();
+        if (!_context.Currency.Any())
+        {
+          await _context.Currency.AddAsync(new Currency { CurrencyName = "USD", CurrencyCode = "USD" });
+          await _context.SaveChangesAsync();
+        }
 
         await _context.InvoiceType.AddAsync(new InvoiceType {InvoiceTypeName = "Default"});
         await _context.SaveChangesAsync();
 
-        await _context.PaymentType.AddAsync(new PaymentType {PaymentTypeName = "Default"});
-        await _context.SaveChangesAsync();
+        if (!_context.PaymentType.Any())
+        {
+          await _context.PaymentType.AddAsync(new PaymentType { PaymentTypeName = "CashPayment" });
+          await _context.SaveChangesAsync();
+        }
 
-        await _context.PurchaseType.AddAsync(new PurchaseType {PurchaseTypeName = "Default"});
-        await _context.SaveChangesAsync();
+        if (!_context.PurchaseType.Any())
+        {
+          await _context.PurchaseType.AddAsync(new PurchaseType { PurchaseTypeName = "Local Purchase" });
+          await _context.SaveChangesAsync();
+        }
 
-        await _context.SalesType.AddAsync(new SalesType {SalesTypeName = "Default"});
-        await _context.SaveChangesAsync();
+        if (!_context.SalesType.Any())
+        {
+          await _context.SalesType.AddAsync(new SalesType { SalesTypeName = "Online Sale" });
+          await _context.SaveChangesAsync();
+        }
 
-        await _context.ShipmentType.AddAsync(new ShipmentType {ShipmentTypeName = "Default"});
-        await _context.SaveChangesAsync();
+        if (!_context.ShipmentType.Any())
+        {
+          await _context.ShipmentType.AddAsync(new ShipmentType { ShipmentTypeName = "Pickup" });
+          await _context.SaveChangesAsync();
+        }
 
-        await _context.UnitOfMeasure.AddAsync(new UnitOfMeasure {UnitOfMeasureName = "PCS"});
-        await _context.SaveChangesAsync();
+        if (!_context.UnitOfMeasure.Any())
+        {
+          await _context.UnitOfMeasure.AddAsync(new UnitOfMeasure { UnitOfMeasureName = "Cup" });
+          await _context.UnitOfMeasure.AddAsync(new UnitOfMeasure { UnitOfMeasureName = "Bottle" });
+          await _context.UnitOfMeasure.AddAsync(new UnitOfMeasure { UnitOfMeasureName = "Pcs" });
+          await _context.SaveChangesAsync();
+        }
 
         if (!_context.ProductType.Any())
         {
@@ -175,19 +195,28 @@ namespace StoreManager.Services
       {
         new Product()
         {
-          ProductTypeId = 3, CatalogBrandId = 3, Description = ".NET Bot Black Sweatshirt", ProductName = "Lemonade",
+          ProductTypeId = 3, CatalogBrandId = 3, Description = "Lemonade made from Allison's shop", ProductName = "Allison's Lemonade",
+          DefaultBuyingPrice = 0.5, CurrencyId = 1, UnitOfMeasureId = 1, 
           DefaultSellingPrice = 1.25, ProductImageUrl = "http://catalogbaseurltobereplaced/images/products/1.png"
         },
         new Product()
         {
-          ProductTypeId = 2, CatalogBrandId = 3, Description = ".NET Black & White Mug", ProductName = "Lemonade(s)",
+          ProductTypeId = 2, CatalogBrandId = 3, Description = "Bottle of Lemonade", ProductName = "Lemonade(s)",
+          DefaultBuyingPrice = 1.5, CurrencyId = 1, UnitOfMeasureId = 2,
           DefaultSellingPrice = 3.00,
           ProductImageUrl = "http://catalogbaseurltobereplaced/images/products/lemonade-clipart.png"
         },
         new Product()
         {
-          ProductTypeId = 3, CatalogBrandId = 2, Description = "Prism White T-Shirt", ProductName = "MilkShake",
+          ProductTypeId = 3, CatalogBrandId = 2, Description = "Milk shake", ProductName = "MilkShake",
+          DefaultBuyingPrice = 0.5, CurrencyId = 1, UnitOfMeasureId = 3,
           DefaultSellingPrice = 1.5, ProductImageUrl = "http://catalogbaseurltobereplaced/images/products/2.png"
+        },
+        new Product()
+        {
+          ProductTypeId = 3, CatalogBrandId = 3, Description = "Lemonade made from Elerie's shop", ProductName = "Elerie's Lemonade",
+          DefaultBuyingPrice = 0.5, CurrencyId = 1, UnitOfMeasureId = 1,
+          DefaultSellingPrice = 1.25, ProductImageUrl = "http://catalogbaseurltobereplaced/images/products/1.png"
         },
       };
     }

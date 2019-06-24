@@ -2,7 +2,7 @@
 
 namespace Microsoft.eShopWeb.Infrastructure.Identity
 {
-    public class CatalogType : BaseEntityModel
+    public class CatalogType : CatalogEntityModel
     {
       public int CatalogTypeId
       {
