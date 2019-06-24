@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.eShopWeb.ApplicationCore.Entities.OrderAggregate;
 using Microsoft.eShopWeb.Infrastructure.Identity;
 using StoreManager.Models;
+using WebMathTraining.Models;
 
 namespace Microsoft.eShopWeb.Infrastructure.Data
 {
@@ -68,6 +69,8 @@ namespace Microsoft.eShopWeb.Infrastructure.Data
 
     public DbSet<BasketItem> BasketItems { get; set; }
     public DbSet<Basket> Baskets { get; set; }
+
+    public DbSet<TodoItem> TodoItems { get; set; }
 
     //public DbSet<Order> Orders { get; set; }
     //public DbSet<OrderItem> OrderItems { get; set; }

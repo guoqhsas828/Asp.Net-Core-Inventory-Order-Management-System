@@ -2,6 +2,22 @@
 
 namespace StoreManager.Models
 {
+  public enum Continents
+  {
+    None = 0,
+    Africa,
+    Asia,
+    Australia,
+    Europe,
+    America
+  }
+
+  public enum UserStatus
+  {
+    InActive = -1,
+    Trial = 0,
+    Active = 1
+  }
 
   public class CatalogEntityModel : BaseEntityModel
   {
@@ -19,5 +35,56 @@ namespace StoreManager.Models
   {
     [NotMapped]
     public int Id { get; set; }
+  }
+
+  public enum TestAnswerType
+
+  {
+
+    None = 0,
+
+    SingleChoice,
+
+    MultipleChoice,
+
+    Integer,
+
+    Number,
+
+    Text
+
+  }
+
+  public enum TestCategory
+
+  {
+
+    None,
+
+    Math,
+
+    Physics
+
+  }
+
+
+  public enum CloudContainer
+
+  {
+
+    None = 0,
+
+    mathpicblobs = 1,
+
+    mkg2012grp = 2,
+
+    mkg2013grp = 3,
+
+    mkgothers = 4,
+
+    physicspicblobs = 8,
+
+    misc = 9
+
   }
 }
