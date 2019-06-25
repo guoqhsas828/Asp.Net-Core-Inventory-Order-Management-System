@@ -62,7 +62,7 @@ namespace StoreManager.Controllers.Api
         public IActionResult Remove([FromBody]CrudViewModel<PaymentVoucher> payload)
         {
             PaymentVoucher paymentVoucher = _context.PaymentVoucher
-                .Where(x => x.PaymentvoucherId == (int)payload.key)
+                .Where(x => x.PaymentVoucherId == (int)payload.key)
                 .FirstOrDefault();
             _context.PaymentVoucher.Remove(paymentVoucher);
             _context.SaveChanges();

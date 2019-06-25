@@ -14,7 +14,7 @@ namespace StoreManager.Models
       set { Id = value; }
     }
 
-    [Required] public string ProductTypeName { get; set; }
-    public string Description { get; set; }
+    [Required] [MaxLength(128)] public string ProductTypeName { get; set; }
+    [MaxLength(1024)] public string Description { get; set; }
   }
 }

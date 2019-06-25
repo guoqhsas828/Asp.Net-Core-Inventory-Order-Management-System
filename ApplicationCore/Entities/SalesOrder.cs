@@ -14,7 +14,10 @@ namespace StoreManager.Models
       set { Id = value; }
     }
 
-    [Display(Name = "Order Number")] public string SalesOrderName { get; set; }
+    [Display(Name = "Order Number")]
+    [MaxLength(128)]
+    public string SalesOrderName { get; set; }
+
     [Display(Name = "Branch")] public int BranchId { get; set; }
     [Display(Name = "Customer")] public int CustomerId { get; set; }
     public DateTimeOffset OrderDate { get; set; }
@@ -23,10 +26,15 @@ namespace StoreManager.Models
     [Display(Name = "Currency")] public int CurrencyId { get; set; }
 
     [Display(Name = "Customer Ref. Number")]
+    [MaxLength(128)]
     public string CustomerRefNumber { get; set; }
 
     [Display(Name = "Sales Type")] public int SalesTypeId { get; set; }
-    [Display(Name = "Notes")] public string Remarks { get; set; }
+
+    [Display(Name = "Notes")]
+    [MaxLength(1024)]
+    public string Remarks { get; set; }
+
     public double Amount { get; set; }
     public double SubTotal { get; set; }
     public double Discount { get; set; }

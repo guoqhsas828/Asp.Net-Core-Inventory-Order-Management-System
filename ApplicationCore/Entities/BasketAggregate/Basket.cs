@@ -1,5 +1,6 @@
 ﻿using StoreManager.Interfaces;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace StoreManager.Models
@@ -7,6 +8,7 @@ namespace StoreManager.Models
   public class Basket : CatalogEntityModel, IAggregateRoot
   {
     public int BasketId { get { return Id; } set { Id = value; } }
+    [MaxLength(900)]
     public string BuyerId { get; set; }
     private readonly List<BasketItem> _items = new List<BasketItem>();
     public ICollection<BasketItem> Items => _items;

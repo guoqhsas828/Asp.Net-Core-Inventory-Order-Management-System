@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace StoreManager.Models
 {
-    public class BillType
-    {
-        public int BillTypeId { get; set; }
-        [Required]
-        public string BillTypeName { get; set; }
-        public string Description { get; set; }
-    }
+  public class BillType
+  {
+    public int BillTypeId { get; set; }
+
+    [Required] [MaxLength(900)] public string BillTypeName { get; set; }
+
+    [MaxLength(1024)] public string Description { get; set; }
+  }
 }

@@ -8,14 +8,16 @@ namespace WebMathTraining.Models
   {
     public int TodoItemId { get { return Id; } set { Id = value; } }
 
+    [MaxLength(900)]
     public string OwnerId { get; set; }
     
     public bool IsDone { get; set; }
     
     [Required]
+    [MaxLength(1024)]
     public string Title { get; set; }
 
-    public string DueAt { get; set; } //DateTimeOffset?
+    public DateTimeOffset DueAt { get; set; } //?
   }
 
 }

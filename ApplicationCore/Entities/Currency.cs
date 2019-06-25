@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 
 namespace StoreManager.Models
 {
-    public class Currency
-    {
-        public int CurrencyId { get; set; }
-        [Required]
-        public string CurrencyName { get; set; }
-        [Required]
-        public string CurrencyCode { get; set; }
-        public string Description { get; set; }
-    }
+  public class Currency
+  {
+    public int CurrencyId { get; set; }
+    [Required] [MaxLength(64)] public string CurrencyName { get; set; }
+    [Required] [MaxLength(8)] public string CurrencyCode { get; set; }
+    [MaxLength(1024)] public string Description { get; set; }
+  }
 }

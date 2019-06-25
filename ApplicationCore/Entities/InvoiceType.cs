@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace StoreManager.Models
 {
-    public class InvoiceType
-    {
-        public int InvoiceTypeId { get; set; }
-        [Required]
-        public string InvoiceTypeName { get; set; }
-        public string Description { get; set; }
-    }
+  public class InvoiceType
+  {
+    public int InvoiceTypeId { get; set; }
+    [Required] [MaxLength(128)] public string InvoiceTypeName { get; set; }
+    [MaxLength(1024)] public string Description { get; set; }
+  }
 }

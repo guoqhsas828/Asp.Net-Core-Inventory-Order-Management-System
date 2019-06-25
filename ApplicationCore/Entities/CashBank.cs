@@ -6,11 +6,14 @@ using System.Threading.Tasks;
 
 namespace StoreManager.Models
 {
-    public class CashBank
-    {
-        public int CashBankId { get; set; }
-        [Display(Name = "Cash / Bank Name")]
-        public string CashBankName { get; set; }
-        public string Description { get; set; }
-    }
+  public class CashBank
+  {
+    public int CashBankId { get; set; }
+
+    [Display(Name = "Cash / Bank Name")]
+    [MaxLength(64)]
+    public string CashBankName { get; set; }
+
+    [MaxLength(1024)] public string Description { get; set; }
+  }
 }

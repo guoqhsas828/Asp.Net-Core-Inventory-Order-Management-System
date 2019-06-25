@@ -72,6 +72,12 @@ namespace Microsoft.eShopWeb.Infrastructure.Data
 
     public DbSet<TodoItem> TodoItems { get; set; }
 
+    public DbSet<TestResult> TestResult { get; set; }
+    public DbSet<TestImage> TestImage { get; set; }
+    public DbSet<TestQuestion> TestQuestion { get; set; }
+    public DbSet<TestSession> TestSession { get; set; }
+    public DbSet<TestGroup> TestGroup { get; set; }
+
     //public DbSet<Order> Orders { get; set; }
     //public DbSet<OrderItem> OrderItems { get; set; }
     //public DbSet<CatalogItem> CatalogItems { get; set; }

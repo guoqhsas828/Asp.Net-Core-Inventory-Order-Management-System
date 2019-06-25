@@ -10,7 +10,7 @@ using StoreManager.Models;
 
 namespace WebMathTraining.Models
 {
-  public class TestResult : BaseEntityModel
+  public class TestResult : CatalogEntityModel
   {
     public new int Id { get; set; }
     public int TestSessionId { get; set; }

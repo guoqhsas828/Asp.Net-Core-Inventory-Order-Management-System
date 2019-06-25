@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace StoreManager.Models
 {
-    public class PaymentType
-    {
-        public int PaymentTypeId { get; set; }
-        [Required]
-        public string PaymentTypeName { get; set; }
-        public string Description { get; set; }
-    }
+  public class PaymentType
+  {
+    public int PaymentTypeId { get; set; }
+    [Required] [MaxLength(128)] public string PaymentTypeName { get; set; }
+    [MaxLength(1024)] public string Description { get; set; }
+  }
 }

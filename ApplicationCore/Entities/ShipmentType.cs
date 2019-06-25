@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace StoreManager.Models
 {
-    public class ShipmentType
-    {
-        public int ShipmentTypeId { get; set; }
-        [Required]
-        public string ShipmentTypeName { get; set; }
-        public string Description { get; set; }
-    }
+  public class ShipmentType
+  {
+    public int ShipmentTypeId { get; set; }
+    [Required] [MaxLength(128)] public string ShipmentTypeName { get; set; }
+    [MaxLength(1024)] public string Description { get; set; }
+  }
 }

@@ -1,14 +1,10 @@
 ﻿using System;
-
 using System.ComponentModel.DataAnnotations;
-
 using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
-//using BaseEntity.Metadata;
-//using BaseEntity.Shared;
 using ProtoBuf;
 using StoreManager.Models;
 using ICloneable = System.ICloneable;
@@ -17,7 +13,7 @@ using ICloneable = System.ICloneable;
 namespace WebMathTraining.Models
 {
  // [Entity(EntityId = 102, TableName = "TestQuestions", Key = new string[] { "Id" })]
-  public class TestQuestion : BaseEntityModel //PersistentObject
+  public class TestQuestion : CatalogEntityModel //PersistentObject
   {
     public TestQuestion()
     {
@@ -27,6 +23,7 @@ namespace WebMathTraining.Models
 
 //    [GuidProperty(AllowNull = false)]
     //public Guid Id { get; set; }
+    [Key]
     public int ObjectId
     {
       get { return Id; }
@@ -35,13 +32,11 @@ namespace WebMathTraining.Models
 
 
 //    [EnumProperty]
-
     public TestCategory Category { get; set; }
 
 
 
 //    [NumericProperty]
-
     public int Level { get; set; }
 
 
@@ -56,31 +51,22 @@ namespace WebMathTraining.Models
 //      set { questionImage_ = ObjectRef.Create(value); }
 
 //    }
-    public int QuestioImageId { get; set; }
+    public int QuestionImageId { get; set; }
 
 
 //    [BinaryBlobProperty]
-
     public byte[] AnswerStream { get; set; }
 
 
 
     //public string Source { get; set; }
 
-
-
     [NotMapped]
-
     public TestAnswer TestAnswer
-
     {
-
       get
-
       {
-
         if (_testAnswer == null)
-
         {
 
           if (AnswerStream != null)
@@ -135,11 +121,7 @@ namespace WebMathTraining.Models
 
 
 
-    [NotMapped]
-
-    private TestAnswer _testAnswer;
-
-
+    [NotMapped]private TestAnswer _testAnswer;
 
     //[NotMapped]
 

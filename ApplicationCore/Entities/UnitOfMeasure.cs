@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace StoreManager.Models
 {
-    public class UnitOfMeasure
-    {
-        public int UnitOfMeasureId { get; set; }
-        [Required]
-        public string UnitOfMeasureName { get; set; }
-        public string Description { get; set; }
-    }
+  public class UnitOfMeasure
+  {
+    public int UnitOfMeasureId { get; set; }
+    [Required] [MaxLength(128)] public string UnitOfMeasureName { get; set; }
+    [MaxLength(1024)] public string Description { get; set; }
+  }
 }

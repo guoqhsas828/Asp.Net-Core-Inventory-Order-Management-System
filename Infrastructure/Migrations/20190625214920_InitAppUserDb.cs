@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Microsoft.eShopWeb.Infrastructure.Migrations
 {
-    public partial class InitAspUserDb : Migration
+    public partial class InitAppUserDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -53,10 +53,10 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
                 {
                     BillId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    BillName = table.Column<string>(nullable: true),
+                    BillName = table.Column<string>(maxLength: 64, nullable: true),
                     GoodsReceivedNoteId = table.Column<int>(nullable: false),
-                    VendorDONumber = table.Column<string>(nullable: true),
-                    VendorInvoiceNumber = table.Column<string>(nullable: true),
+                    VendorDONumber = table.Column<string>(maxLength: 900, nullable: true),
+                    VendorInvoiceNumber = table.Column<string>(maxLength: 900, nullable: true),
                     BillDate = table.Column<DateTimeOffset>(nullable: false),
                     BillDueDate = table.Column<DateTimeOffset>(nullable: false),
                     BillTypeId = table.Column<int>(nullable: false)
@@ -72,8 +72,8 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
                 {
                     BillTypeId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    BillTypeName = table.Column<string>(nullable: false),
-                    Description = table.Column<string>(nullable: true)
+                    BillTypeName = table.Column<string>(maxLength: 900, nullable: false),
+                    Description = table.Column<string>(maxLength: 1024, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -86,16 +86,16 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
                 {
                     BranchId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    BranchName = table.Column<string>(nullable: false),
-                    Description = table.Column<string>(nullable: true),
+                    BranchName = table.Column<string>(maxLength: 64, nullable: false),
+                    Description = table.Column<string>(maxLength: 512, nullable: true),
                     CurrencyId = table.Column<int>(nullable: false),
-                    Address = table.Column<string>(nullable: true),
-                    City = table.Column<string>(nullable: true),
-                    State = table.Column<string>(nullable: true),
-                    ZipCode = table.Column<string>(nullable: true),
-                    Phone = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true),
-                    ContactPerson = table.Column<string>(nullable: true)
+                    Address = table.Column<string>(maxLength: 256, nullable: true),
+                    City = table.Column<string>(maxLength: 128, nullable: true),
+                    State = table.Column<string>(maxLength: 128, nullable: true),
+                    ZipCode = table.Column<string>(maxLength: 32, nullable: true),
+                    Phone = table.Column<string>(maxLength: 32, nullable: true),
+                    Email = table.Column<string>(maxLength: 128, nullable: true),
+                    ContactPerson = table.Column<string>(maxLength: 128, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -108,8 +108,8 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
                 {
                     CashBankId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CashBankName = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true)
+                    CashBankName = table.Column<string>(maxLength: 64, nullable: true),
+                    Description = table.Column<string>(maxLength: 1024, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -122,8 +122,8 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
                 {
                     CatalogBrandId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Brand = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true)
+                    Brand = table.Column<string>(maxLength: 128, nullable: true),
+                    Description = table.Column<string>(maxLength: 1024, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -136,9 +136,9 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
                 {
                     CurrencyId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CurrencyName = table.Column<string>(nullable: false),
-                    CurrencyCode = table.Column<string>(nullable: false),
-                    Description = table.Column<string>(nullable: true)
+                    CurrencyName = table.Column<string>(maxLength: 64, nullable: false),
+                    CurrencyCode = table.Column<string>(maxLength: 8, nullable: false),
+                    Description = table.Column<string>(maxLength: 1024, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -151,15 +151,15 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
                 {
                     CustomerId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CustomerName = table.Column<string>(nullable: false),
+                    CustomerName = table.Column<string>(maxLength: 128, nullable: false),
                     CustomerTypeId = table.Column<int>(nullable: false),
-                    Address = table.Column<string>(nullable: true),
-                    City = table.Column<string>(nullable: true),
-                    State = table.Column<string>(nullable: true),
-                    ZipCode = table.Column<string>(nullable: true),
-                    Phone = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true),
-                    ContactPerson = table.Column<string>(nullable: true)
+                    Address = table.Column<string>(maxLength: 256, nullable: true),
+                    City = table.Column<string>(maxLength: 128, nullable: true),
+                    State = table.Column<string>(maxLength: 128, nullable: true),
+                    ZipCode = table.Column<string>(maxLength: 32, nullable: true),
+                    Phone = table.Column<string>(maxLength: 32, nullable: true),
+                    Email = table.Column<string>(maxLength: 128, nullable: true),
+                    ContactPerson = table.Column<string>(maxLength: 128, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -172,8 +172,8 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
                 {
                     CustomerTypeId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CustomerTypeName = table.Column<string>(nullable: false),
-                    Description = table.Column<string>(nullable: true)
+                    CustomerTypeName = table.Column<string>(maxLength: 64, nullable: false),
+                    Description = table.Column<string>(maxLength: 1024, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -186,11 +186,11 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
                 {
                     GoodsReceivedNoteId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    GoodsReceivedNoteName = table.Column<string>(nullable: true),
+                    GoodsReceivedNoteName = table.Column<string>(maxLength: 128, nullable: true),
                     PurchaseOrderId = table.Column<int>(nullable: false),
                     GRNDate = table.Column<DateTimeOffset>(nullable: false),
-                    VendorDONumber = table.Column<string>(nullable: true),
-                    VendorInvoiceNumber = table.Column<string>(nullable: true),
+                    VendorDONumber = table.Column<string>(maxLength: 128, nullable: true),
+                    VendorInvoiceNumber = table.Column<string>(maxLength: 128, nullable: true),
                     WarehouseId = table.Column<int>(nullable: false),
                     IsFullReceive = table.Column<bool>(nullable: false)
                 },
@@ -205,7 +205,7 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
                 {
                     InvoiceId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    InvoiceName = table.Column<string>(nullable: true),
+                    InvoiceName = table.Column<string>(maxLength: 128, nullable: true),
                     ShipmentId = table.Column<int>(nullable: false),
                     InvoiceDate = table.Column<DateTimeOffset>(nullable: false),
                     InvoiceDueDate = table.Column<DateTimeOffset>(nullable: false),
@@ -222,8 +222,8 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
                 {
                     InvoiceTypeId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    InvoiceTypeName = table.Column<string>(nullable: false),
-                    Description = table.Column<string>(nullable: true)
+                    InvoiceTypeName = table.Column<string>(maxLength: 128, nullable: false),
+                    Description = table.Column<string>(maxLength: 1024, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -236,9 +236,9 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
                 {
                     NumberSequenceId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    NumberSequenceName = table.Column<string>(nullable: false),
-                    Module = table.Column<string>(nullable: false),
-                    Prefix = table.Column<string>(nullable: false),
+                    NumberSequenceName = table.Column<string>(maxLength: 128, nullable: false),
+                    Module = table.Column<string>(maxLength: 1024, nullable: false),
+                    Prefix = table.Column<string>(maxLength: 128, nullable: false),
                     LastNumber = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -252,7 +252,7 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
                 {
                     PaymentReceiveId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    PaymentReceiveName = table.Column<string>(nullable: true),
+                    PaymentReceiveName = table.Column<string>(maxLength: 128, nullable: true),
                     InvoiceId = table.Column<int>(nullable: false),
                     PaymentDate = table.Column<DateTimeOffset>(nullable: false),
                     PaymentTypeId = table.Column<int>(nullable: false),
@@ -270,8 +270,8 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
                 {
                     PaymentTypeId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    PaymentTypeName = table.Column<string>(nullable: false),
-                    Description = table.Column<string>(nullable: true)
+                    PaymentTypeName = table.Column<string>(maxLength: 128, nullable: false),
+                    Description = table.Column<string>(maxLength: 1024, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -282,9 +282,9 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
                 name: "PaymentVoucher",
                 columns: table => new
                 {
-                    PaymentvoucherId = table.Column<int>(nullable: false)
+                    PaymentVoucherId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    PaymentVoucherName = table.Column<string>(nullable: true),
+                    PaymentVoucherName = table.Column<string>(maxLength: 128, nullable: true),
                     BillId = table.Column<int>(nullable: false),
                     PaymentDate = table.Column<DateTimeOffset>(nullable: false),
                     PaymentTypeId = table.Column<int>(nullable: false),
@@ -294,7 +294,7 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PaymentVoucher", x => x.PaymentvoucherId);
+                    table.PrimaryKey("PK_PaymentVoucher", x => x.PaymentVoucherId);
                 });
 
             migrationBuilder.CreateTable(
@@ -303,8 +303,8 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
                 {
                     ProductTypeId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ProductTypeName = table.Column<string>(nullable: false),
-                    Description = table.Column<string>(nullable: true)
+                    ProductTypeName = table.Column<string>(maxLength: 128, nullable: false),
+                    Description = table.Column<string>(maxLength: 1024, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -317,7 +317,7 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
                 {
                     PurchaseOrderId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    PurchaseOrderName = table.Column<string>(nullable: true),
+                    PurchaseOrderName = table.Column<string>(maxLength: 128, nullable: true),
                     BranchId = table.Column<int>(nullable: false),
                     VendorId = table.Column<int>(nullable: false),
                     OrderDate = table.Column<DateTimeOffset>(nullable: false),
@@ -343,8 +343,8 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
                 {
                     PurchaseTypeId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    PurchaseTypeName = table.Column<string>(nullable: false),
-                    Description = table.Column<string>(nullable: true)
+                    PurchaseTypeName = table.Column<string>(maxLength: 128, nullable: false),
+                    Description = table.Column<string>(maxLength: 1024, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -357,15 +357,15 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
                 {
                     SalesOrderId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    SalesOrderName = table.Column<string>(nullable: true),
+                    SalesOrderName = table.Column<string>(maxLength: 128, nullable: true),
                     BranchId = table.Column<int>(nullable: false),
                     CustomerId = table.Column<int>(nullable: false),
                     OrderDate = table.Column<DateTimeOffset>(nullable: false),
                     DeliveryDate = table.Column<DateTimeOffset>(nullable: false),
                     CurrencyId = table.Column<int>(nullable: false),
-                    CustomerRefNumber = table.Column<string>(nullable: true),
+                    CustomerRefNumber = table.Column<string>(maxLength: 128, nullable: true),
                     SalesTypeId = table.Column<int>(nullable: false),
-                    Remarks = table.Column<string>(nullable: true),
+                    Remarks = table.Column<string>(maxLength: 1024, nullable: true),
                     Amount = table.Column<double>(nullable: false),
                     SubTotal = table.Column<double>(nullable: false),
                     Discount = table.Column<double>(nullable: false),
@@ -384,8 +384,8 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
                 {
                     SalesTypeId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    SalesTypeName = table.Column<string>(nullable: false),
-                    Description = table.Column<string>(nullable: true)
+                    SalesTypeName = table.Column<string>(maxLength: 128, nullable: false),
+                    Description = table.Column<string>(maxLength: 1024, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -398,7 +398,7 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
                 {
                     ShipmentId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ShipmentName = table.Column<string>(nullable: true),
+                    ShipmentName = table.Column<string>(maxLength: 128, nullable: true),
                     SalesOrderId = table.Column<int>(nullable: false),
                     ShipmentDate = table.Column<DateTimeOffset>(nullable: false),
                     ShipmentTypeId = table.Column<int>(nullable: false),
@@ -416,8 +416,8 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
                 {
                     ShipmentTypeId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ShipmentTypeName = table.Column<string>(nullable: false),
-                    Description = table.Column<string>(nullable: true)
+                    ShipmentTypeName = table.Column<string>(maxLength: 128, nullable: false),
+                    Description = table.Column<string>(maxLength: 1024, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -430,8 +430,8 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
                 {
                     UnitOfMeasureId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    UnitOfMeasureName = table.Column<string>(nullable: false),
-                    Description = table.Column<string>(nullable: true)
+                    UnitOfMeasureName = table.Column<string>(maxLength: 128, nullable: false),
+                    Description = table.Column<string>(maxLength: 1024, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -444,14 +444,22 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
                 {
                     UserProfileId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true),
-                    Password = table.Column<string>(nullable: true),
-                    ConfirmPassword = table.Column<string>(nullable: true),
-                    OldPassword = table.Column<string>(nullable: true),
-                    ProfilePicture = table.Column<string>(nullable: true),
-                    ApplicationUserId = table.Column<string>(nullable: true)
+                    FirstName = table.Column<string>(maxLength: 128, nullable: true),
+                    LastName = table.Column<string>(maxLength: 128, nullable: true),
+                    Email = table.Column<string>(maxLength: 256, nullable: true),
+                    Password = table.Column<string>(maxLength: 128, nullable: true),
+                    ConfirmPassword = table.Column<string>(maxLength: 128, nullable: true),
+                    OldPassword = table.Column<string>(maxLength: 128, nullable: true),
+                    ProfilePicture = table.Column<string>(maxLength: 1024, nullable: true),
+                    ApplicationUserId = table.Column<string>(maxLength: 900, nullable: true),
+                    Continent = table.Column<int>(nullable: false),
+                    ExperienceLevel = table.Column<int>(nullable: false),
+                    UserStatus = table.Column<int>(nullable: false),
+                    Created = table.Column<DateTime>(nullable: false),
+                    LastUpdated = table.Column<DateTime>(nullable: false),
+                    LatestLogin = table.Column<DateTime>(nullable: false),
+                    AchievedPoints = table.Column<double>(nullable: false),
+                    AchievedLevel = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -464,15 +472,15 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
                 {
                     VendorId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    VendorName = table.Column<string>(nullable: false),
+                    VendorName = table.Column<string>(maxLength: 128, nullable: false),
                     VendorTypeId = table.Column<int>(nullable: false),
-                    Address = table.Column<string>(nullable: true),
-                    City = table.Column<string>(nullable: true),
-                    State = table.Column<string>(nullable: true),
-                    ZipCode = table.Column<string>(nullable: true),
-                    Phone = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true),
-                    ContactPerson = table.Column<string>(nullable: true)
+                    Address = table.Column<string>(maxLength: 256, nullable: true),
+                    City = table.Column<string>(maxLength: 128, nullable: true),
+                    State = table.Column<string>(maxLength: 128, nullable: true),
+                    ZipCode = table.Column<string>(maxLength: 32, nullable: true),
+                    Phone = table.Column<string>(maxLength: 32, nullable: true),
+                    Email = table.Column<string>(maxLength: 128, nullable: true),
+                    ContactPerson = table.Column<string>(maxLength: 128, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -485,8 +493,8 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
                 {
                     VendorTypeId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    VendorTypeName = table.Column<string>(nullable: false),
-                    Description = table.Column<string>(nullable: true)
+                    VendorTypeName = table.Column<string>(maxLength: 128, nullable: false),
+                    Description = table.Column<string>(maxLength: 1024, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -499,8 +507,8 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
                 {
                     WarehouseId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    WarehouseName = table.Column<string>(nullable: false),
-                    Description = table.Column<string>(nullable: true),
+                    WarehouseName = table.Column<string>(maxLength: 128, nullable: false),
+                    Description = table.Column<string>(maxLength: 1024, nullable: true),
                     BranchId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -620,11 +628,11 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
                 {
                     ProductId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ProductName = table.Column<string>(nullable: false),
-                    ProductCode = table.Column<string>(nullable: true),
-                    Barcode = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
-                    ProductImageUrl = table.Column<string>(nullable: true),
+                    ProductName = table.Column<string>(maxLength: 128, nullable: false),
+                    ProductCode = table.Column<string>(maxLength: 128, nullable: true),
+                    Barcode = table.Column<string>(maxLength: 128, nullable: true),
+                    Description = table.Column<string>(maxLength: 1024, nullable: true),
+                    ProductImageUrl = table.Column<string>(maxLength: 1024, nullable: true),
                     UnitOfMeasureId = table.Column<int>(nullable: false),
                     DefaultBuyingPrice = table.Column<double>(nullable: false),
                     DefaultSellingPrice = table.Column<double>(nullable: false),
@@ -658,7 +666,7 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     PurchaseOrderId = table.Column<int>(nullable: false),
                     ProductId = table.Column<int>(nullable: false),
-                    Description = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(maxLength: 1024, nullable: true),
                     Quantity = table.Column<double>(nullable: false),
                     Price = table.Column<double>(nullable: false),
                     Amount = table.Column<double>(nullable: false),
@@ -688,7 +696,7 @@ namespace Microsoft.eShopWeb.Infrastructure.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     SalesOrderId = table.Column<int>(nullable: false),
                     ProductId = table.Column<int>(nullable: false),
-                    Description = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(maxLength: 1024, nullable: true),
                     Quantity = table.Column<double>(nullable: false),
                     Price = table.Column<double>(nullable: false),
                     Amount = table.Column<double>(nullable: false),

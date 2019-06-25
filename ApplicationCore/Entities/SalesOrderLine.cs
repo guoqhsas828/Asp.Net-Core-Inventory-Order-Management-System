@@ -12,7 +12,7 @@ namespace StoreManager.Models
     [Display(Name = "Sales Order")] public int SalesOrderId { get; set; }
     [Display(Name = "Sales Order")] public SalesOrder SalesOrder { get; set; }
     [Display(Name = "Product Item")] public int ProductId { get; set; }
-    public string Description { get; set; }
+    [MaxLength(1024)]public string Description { get; set; }
     public double Quantity { get; set; }
     public double Price { get; set; }
     public double Amount { get; set; }

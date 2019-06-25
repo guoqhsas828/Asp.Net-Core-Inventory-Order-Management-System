@@ -14,11 +14,11 @@ namespace StoreManager.Models
       set { Id = value; }
     }
 
-    [Required] public string ProductName { get; set; }
-    public string ProductCode { get; set; }
-    public string Barcode { get; set; }
-    public string Description { get; set; }
-    public string ProductImageUrl { get; set; }
+    [Required] [MaxLength(128)] public string ProductName { get; set; }
+    [MaxLength(128)] public string ProductCode { get; set; }
+    [MaxLength(128)] public string Barcode { get; set; }
+    [MaxLength(1024)] public string Description { get; set; }
+    [MaxLength(1024)] public string ProductImageUrl { get; set; }
     [Display(Name = "UOM")] public int UnitOfMeasureId { get; set; }
     public double DefaultBuyingPrice { get; set; } = 0.0;
     public double DefaultSellingPrice { get; set; } = 0.0;

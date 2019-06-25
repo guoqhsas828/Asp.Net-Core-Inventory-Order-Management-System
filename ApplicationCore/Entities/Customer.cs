@@ -22,18 +22,26 @@ namespace StoreManager.Models
     }
 
     [Required]
+    [MaxLength(128)]
     public string CustomerName { get; set; }
     [Display(Name = "Customer Type")]
     public int CustomerTypeId { get; set; }
     [Display(Name = "Street Address")]
+    [MaxLength(256)]
     public string Address { get; set; }
+    [MaxLength(128)]
     public string City { get; set; }
+    [MaxLength(128)]
     public string State { get; set; }
     [Display(Name = "Zip Code")]
+    [MaxLength(32)]
     public string ZipCode { get; set; }
+    [MaxLength(32)]
     public string Phone { get; set; }
+    [MaxLength(128)]
     public string Email { get; set; }
     [Display(Name = "Contact Person")]
+    [MaxLength(128)]
     public string ContactPerson { get; set; }
   }
 }
